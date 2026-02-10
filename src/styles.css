@@ -4,15 +4,15 @@
 
 :root {
 	/* bg: 'bg.png' */
-	background-color: #72062AFF;
-	background-image: url('./assets/bg.png');
+	background-color: #72062aff;
+	background-image: url("./assets/bg.png");
 	background-size: cover;
 	background-attachment: fixed;
 }
 
 .text-bubble {
 	/* text: bg+border #990000 1em; */
-	--color: #FF546BFF;
+	--color: #ff546bff;
 	background-color: var(--color);
 	border: 0.25rem solid var(--color);
 	border-radius: 1em;

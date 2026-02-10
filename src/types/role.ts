@@ -15,13 +15,12 @@ export class Role {
 		};
 		this.details = roleData.details;
 		this.exemples = roleData.exemples ?? [];
-		this.image =
-			roleData.image ??
-			`roles/${this.normalizedName}.png`;
-		this.seeAlso = roleData.seeAlso?.map((seeAlso) => ({
-			name: seeAlso,
-			normalizedName: Role.normalizeName(seeAlso),
-		})) ?? [];
+		this.image = roleData.image ?? `roles/${this.normalizedName}.png`;
+		this.seeAlso =
+			roleData.seeAlso?.map((seeAlso) => ({
+				name: seeAlso,
+				normalizedName: Role.normalizeName(seeAlso),
+			})) ?? [];
 	}
 	name: string;
 	camp: Camp;

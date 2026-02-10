@@ -1,34 +1,40 @@
-name: Build and Deploy
+name: Ensure code quality
 on:
-    push:
+    pull_request:
         branches:
             - main
     workflow_dispatch:
 
-# Allow write permission to GITHUB_TOKEN to commit to deploy branch.
-permissions:
-    contents: write
-
 jobs:
-    test-deploy:
+    lint:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
-            # Build angular
-            - name: Install dependencies
-              run: |
-                  npm install -g pnpm
-                  pnpm install --frozen-lockfile
-            - name: Build project
-              run: |
-                  pnpm build --configuration=production --base-href=/yog-wiki/
-                  cp dist/yog-wiki/browser/index.html dist/yog-wiki/browser/404.html
-            # Deploy on gh-pages branch
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v4
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist/yog-wiki/browser
-                  publish_branch: gh-pages
-                  user_name: github-actions[bot]
-                  user_email: github-actions[bot]@users.noreply.github.com
+            - uses: actions/checkout@v6
+            - uses: ./.github/actions/prepare
+            - name: Lint code
+              run: pnpm run lint
+
+    check-format:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: ./.github/actions/prepare
+            - name: Check code format
+              run: pnpm run format:check
+
+    try-build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: ./.github/actions/prepare
+            - name: Try build
+              run: pnpm run build
+
+    test:
+        runs-on: ubuntu-latest
+        needs: [try-build]
+        steps:
+            - uses: actions/checkout@v6
+            - uses: ./.github/actions/prepare
+            - name: Run tests
+              run: pnpm run test:coverage --watch=false
