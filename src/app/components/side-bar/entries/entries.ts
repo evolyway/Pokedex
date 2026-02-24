@@ -24,6 +24,7 @@ class SidebarNodeData {
 	entries!: SidebarNode;
 	link?: string;
 	children?: [ string, SidebarNode ][];
+	collapsed = true;
 
 	constructor(name: string, entries: SidebarNode) {
 		this.name = name;
@@ -37,5 +38,9 @@ class SidebarNodeData {
 		} else {
 			this.children = Object.entries(entries);
 		}
+	}
+
+	toggle() {
+		this.collapsed = !this.collapsed;
 	}
 }
