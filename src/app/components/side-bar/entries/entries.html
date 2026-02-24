@@ -1,0 +1,17 @@
+@for (entry of entriesData; track entry.name) {
+	<div>
+		@if (entry.link) {
+			<a [routerLink]="entry.link">
+				{{ entry.name }}
+			</a>
+		} @else {
+			{{ entry.name }}
+		}
+
+		@if (entry.children) {
+			<div class="ml-4">
+				<app-side-bar-entries [entries]="entry.children"></app-side-bar-entries>
+			</div>
+		}
+	</div>
+}

@@ -1,8 +1,8 @@
-import type { SidebarStructure, SidebarStructureEntries } from '#types/sidebarStructure';
+import type { SidebarTree, SidebarNode } from '#types/sidebarStructure';
 import type Camp from '#types/camp';
 import { Role } from '#types/role';
 
-const getRolesGrouped: (roles: Role[], groupBy: (role: Role) => string) => SidebarStructureEntries = (roles: Role[], groupBy: (role: Role) => string) =>
+const getRolesGrouped: (roles: Role[], groupBy: (role: Role) => string) => SidebarNode = (roles: Role[], groupBy: (role: Role) => string) =>
 	/* { "camp": { "name": "/role/normalizedName" } } */
 	Object.entries(Object.groupBy(
 			roles,
@@ -17,6 +17,6 @@ const getRolesGrouped: (roles: Role[], groupBy: (role: Role) => string) => Sideb
 				}), {} as Record<string, string>),
 			}), {} as Record<Camp, Record<string, string>>);
 
-export const getSidebarStructure: (roles: Role[]) => SidebarStructure = (roles: Role[]) => ({
+export const getSidebarStructure: (roles: Role[]) => SidebarTree = (roles: Role[]) => ({
 	"Entries": getRolesGrouped(roles, role => role.camp),
 });
