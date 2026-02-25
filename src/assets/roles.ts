@@ -49,7 +49,6 @@ const roles: jsonRole[] = [
 		"name": "Minimal",
 		"camp": Camp.Solitaire,
 		"aura": Aura.Neutre,
-		"details": ["Lorem ipsum dolor sit amet."],
 		"image": "https://static.vecteezy.com/system/resources/previews/013/519/821/large_2x/empty-glass-illustration-on-a-white-background-vector.jpg"
 	}
 ];
