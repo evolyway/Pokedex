@@ -15,6 +15,9 @@ jobs:
         steps:
             - uses: actions/checkout@v6
             - uses: ./.github/actions/prepare
+			- name: Swap roles file (dev -> prod)
+			  run: |
+				  mv -f src/assets/roles-prod.ts src/assets/roles.ts
             - name: Build project
               run: |
                   pnpm build --configuration=production --base-href=/yog-wiki/
