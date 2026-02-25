@@ -12,6 +12,8 @@ export class App implements OnInit {
 	sidebarOpen = signal(true);
 
 	ngOnInit() {
+		if (typeof window === 'undefined') return;
+
 		this.resetSidebar();
 		window.addEventListener('resize', this.resetSidebar.bind(this));
 	}
