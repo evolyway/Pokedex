@@ -7,7 +7,7 @@ import { SidebarTree, SidebarNode } from '#types/sidebarStructure';
 
 @Component({
 	selector: 'app-side-bar',
-	imports: [ SideBarEntries ],
+	imports: [SideBarEntries],
 	templateUrl: './side-bar.html',
 	styleUrl: './side-bar.css',
 })

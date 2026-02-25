@@ -21,6 +21,6 @@ export class App implements OnInit {
 	}
 
 	toggleSidebar() {
-		this.sidebarOpen.update(open => !open);
+		this.sidebarOpen.update((open) => !open);
 	}
 }

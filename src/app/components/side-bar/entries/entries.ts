@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Input } from '@angular/core';
 import { SidebarNode } from '#types/sidebarStructure';
 import { OnInit } from '@angular/core';
-import {RouterModule} from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'app-side-bar-entries',
@@ -15,7 +15,9 @@ export class SideBarEntries implements OnInit {
 	entriesData!: SidebarNodeData[];
 
 	ngOnInit() {
-		this.entriesData = this.entries.map(([name, entry]) => new SidebarNodeData(name, entry));
+		this.entriesData = this.entries.map(
+			([name, entry]) => new SidebarNodeData(name, entry),
+		);
 	}
 }
 
@@ -24,7 +26,7 @@ class SidebarNodeData {
 	entries!: SidebarNode;
 	link?: string;
 	group?: {
-		children: [ string, SidebarNode ][];
+		children: [string, SidebarNode][];
 		collapsed: boolean;
 		toggle: () => void;
 	};
@@ -40,7 +42,7 @@ class SidebarNodeData {
 			this.link = entries;
 		} else {
 			// groups
-			let children: [ string, SidebarNode ][];
+			let children: [string, SidebarNode][];
 			if (entries instanceof Array) {
 				// with link
 				this.link = entries[0];
@@ -54,7 +56,7 @@ class SidebarNodeData {
 				collapsed: children.length >= 5,
 				toggle: () => {
 					this.group!.collapsed = !this.group!.collapsed;
-				}
+				},
 			};
 		}
 	}

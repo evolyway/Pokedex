@@ -1,9 +1,13 @@
 <div class="flex flex-col h-screen overflow-hidden">
-	<header class="shrink-0 flex items-center px-3 py-2 bg-sidebar-bg/80 border-b border-sidebar-accent/30">
+	<header
+		class="shrink-0 flex items-center px-3 py-2 bg-sidebar-bg/80 border-b border-sidebar-accent/30"
+	>
 		<button
 			(click)="toggleSidebar()"
 			class="flex items-center justify-center w-8 h-8 rounded text-sidebar-text hover:bg-sidebar-accent/20 transition-colors text-lg"
-		>&#9776;</button>
+		>
+			&#9776;
+		</button>
 	</header>
 	<div class="flex flex-1 overflow-hidden">
 		<app-side-bar [class.hidden]="!sidebarOpen()" />
