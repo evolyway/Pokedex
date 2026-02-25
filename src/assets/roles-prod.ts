@@ -42,6 +42,10 @@ const roles: jsonRole[] = [
 		"details": [],
 		"exemples": [
 			"Je suis Robonyan et je décide de connaître le rôle de Tabuki, je verrai : \"Le rôle de Tabuki est : Jibanyan\" si celui-ci est Jibanyan"
+		],
+		"seeAlso": [
+			"Robonyan F",
+			"Robonyan Ultime"
 		]
 	},
 	{
@@ -72,6 +76,10 @@ const roles: jsonRole[] = [
 		"details": [],
 		"exemples": [
 			"Je suis Robonyan Ultime et je demande au Maitre du Yo-Kai World \"Tabuki est-il en couple ?\" Je verrai : \"Oui\" si Tabuki est en couple."
+		],
+		"seeAlso": [
+			"Robonyan F",
+			"Robonyan"
 		]
 	},
 	{
@@ -158,6 +166,10 @@ const roles: jsonRole[] = [
 		"details": [],
 		"exemples": [
 			"Je suis Robonyan F et je décide de connaître les envoûtements qu'à subit Tabuki, je verrai : \"Tabuki a été bloqué, Tabuki a été vampirisé, Tabuki a été protégé des Onis et Tabuki a été regardé par le Robonyan\" si Tabuki a été bloqué, vampirisé, protégé contre les Onis et regardé par le Robonyan."
+		],
+		"seeAlso": [
+			"Robonyan",
+			"Robonyan Ultime"
 		]
 	},
 	{
