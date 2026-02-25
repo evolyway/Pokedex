@@ -1,13 +1,14 @@
 @for (entry of entriesData; track entry.name) {
 	<div class="my-0.5">
-		@if (entry.children) {
+		@let group = entry.group;
+		@if (group) {
 			<button
-				(click)="entry.toggle()"
+				(click)="group.toggle()"
 				class="flex items-center w-full gap-1 rounded px-2 py-1 text-left text-sm font-semibold text-[#ffccd3] hover:bg-[#ff546b]/20 transition-colors"
 			>
 				<span
 					class="shrink-0 transition-transform duration-200"
-					[class.rotate-90]="!entry.collapsed"
+					[class.rotate-90]="!group.collapsed"
 				>&#9654;</span>
 				@if (entry.link) {
 					<a [routerLink]="entry.link" class="flex-1 hover:underline">
@@ -18,7 +19,7 @@
 				}
 			</button>
 			<div class="ml-3 border-l border-[#ff546b]/30 pl-2" [class.hidden]="group.collapsed">
-				<app-side-bar-entries [entries]="entry.children"></app-side-bar-entries>
+				<app-side-bar-entries [entries]="group.children"></app-side-bar-entries>
 			</div>
 		} @else {
 			<a
