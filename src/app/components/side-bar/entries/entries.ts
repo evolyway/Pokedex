@@ -45,7 +45,7 @@ class SidebarNodeData {
 			}
 			this.group = {
 				children,
-				collapsed: true,
+				collapsed: children.length >= 5,
 				toggle: () => {
 					this.group!.collapsed = !this.group!.collapsed;
 				}
