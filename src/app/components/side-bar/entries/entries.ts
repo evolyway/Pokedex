@@ -12,11 +12,13 @@ import { RouterModule } from '@angular/router';
 })
 export class SideBarEntries implements OnInit {
 	@Input() entries!: [string, SidebarNode][];
+	@Input() openDepth!: number;
 	entriesData: SidebarNodeData[] = [];
 
 	ngOnInit() {
 		this.entriesData = this.entries.map(
-			([name, entry]) => new SidebarNodeData(name, entry),
+			([name, entry]) =>
+				new SidebarNodeData(name, entry, this.openDepth <= 0),
 		);
 	}
 }
@@ -31,7 +33,7 @@ class SidebarNodeData {
 		toggle: () => void;
 	};
 
-	constructor(name: string, entries: SidebarNode) {
+	constructor(name: string, entries: SidebarNode, collapsed = true) {
 		this.name = name;
 		this.entries = entries;
 
@@ -53,7 +55,7 @@ class SidebarNodeData {
 			}
 			this.group = {
 				children,
-				collapsed: children.length >= 5,
+				collapsed,
 				toggle: () => {
 					this.group!.collapsed = !this.group!.collapsed;
 				},
