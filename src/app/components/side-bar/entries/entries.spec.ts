@@ -13,6 +13,7 @@ describe('Entries', () => {
 
 		fixture = TestBed.createComponent(SideBarEntries);
 		component = fixture.componentInstance;
+		component.entries = [];
 		await fixture.whenStable();
 	});
 
