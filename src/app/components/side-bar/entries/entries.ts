@@ -36,7 +36,7 @@ class SidebarNodeData {
 		this.entries = entries;
 
 		if (entries === null) {
-			// visible non-clickable lign
+			// visible non-clickable line
 		} else if (typeof entries === 'string') {
 			// link
 			this.link = entries;
