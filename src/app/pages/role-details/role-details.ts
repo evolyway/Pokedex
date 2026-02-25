@@ -1,5 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, inject, WritableSignal, signal, OnInit } from '@angular/core';
+import {
+	Component,
+	inject,
+	WritableSignal,
+	signal,
+	OnInit,
+} from '@angular/core';
 import { Roles } from '#services/roles';
 import type { Role } from '#types/role';
 import { RouterModule } from '@angular/router';
@@ -12,7 +18,8 @@ import { RouterModule } from '@angular/router';
 })
 export class RoleDetails implements OnInit {
 	private route = inject(ActivatedRoute);
-	private readonly _role: WritableSignal<Role | undefined> = signal(undefined);
+	private readonly _role: WritableSignal<Role | undefined> =
+		signal(undefined);
 	public readonly role = this._role.asReadonly();
 	private readonly roleService = inject(Roles);
 	protected descriptions: { type: string; text: string }[] = [];
@@ -20,7 +27,9 @@ export class RoleDetails implements OnInit {
 	ngOnInit() {
 		this.route.params.subscribe((params) => {
 			const name = params['name'];
-			const role = this.roleService.list.find((role) => role.normalizedName === name);
+			const role = this.roleService.list.find(
+				(role) => role.normalizedName === name,
+			);
 			this._role.set(role);
 			if (!role) return;
 			this.descriptions = [
