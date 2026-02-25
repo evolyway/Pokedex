@@ -34,9 +34,7 @@
 		"pouvoirs": {
 			"jour": ["Lorem ipsum dolor sit amet."]
 		},
-		"details": [
-			"Consectetur adipiscing elit."
-		],
+		"details": ["Consectetur adipiscing elit."],
 		"exemples": [
 			"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 		],
@@ -47,9 +45,7 @@
 		"name": "Minimal",
 		"camp": "Solitaire",
 		"aura": "Neutre",
-		"details": [
-			"Lorem ipsum dolor sit amet."
-		],
+		"details": ["Lorem ipsum dolor sit amet."],
 		"image": "https://static.vecteezy.com/system/resources/previews/013/519/821/large_2x/empty-glass-illustration-on-a-white-background-vector.jpg"
 	}
 ]

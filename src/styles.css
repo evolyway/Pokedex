@@ -2,18 +2,32 @@
 
 @import "tailwindcss";
 
+@theme {
+	--color-sidebar-bg: #3d0117;
+	--color-sidebar-accent: #ff546b;
+	--color-sidebar-text: #ffccd3;
+	--color-sidebar-text-muted: #ffa0b0;
+}
+
 :root {
 	/* bg: 'bg.png' */
-	background-image: url('./assets/bg.png');
+	background-color: #72062aff;
+	background-image: url("./assets/bg.png");
 	background-size: cover;
 	background-attachment: fixed;
 }
 
 .text-bubble {
 	/* text: bg+border #990000 1em; */
-	--color: #FF546BFF;
+	--color: #ff546bff;
 	background-color: var(--color);
-	border: 0.5rem solid var(--color);
+	border: 0.25rem solid var(--color);
 	border-radius: 1em;
-	padding: 1em;
+	padding: 0.5em;
+}
+@media (width >= 48rem) {
+	.text-bubble {
+		border-width: 0.5rem;
+		padding: 1em;
+	}
 }

@@ -1,0 +1,30 @@
+name: Build and Deploy
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+# Allow write permission to GITHUB_TOKEN to commit to deploy branch.
+permissions:
+    contents: write
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: ./.github/actions/prepare
+            - name: Build project
+              run: |
+                  pnpm build --configuration=production --base-href=/yog-wiki/
+                  cp dist/yog-wiki/browser/index.html dist/yog-wiki/browser/404.html
+            # Deploy on gh-pages branch
+            - name: Deploy to GitHub Pages
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist/yog-wiki/browser
+                  publish_branch: gh-pages
+                  user_name: github-actions[bot]
+                  user_email: github-actions[bot]@users.noreply.github.com
