@@ -33,7 +33,8 @@ class SidebarNodeData {
 		this.name = name;
 		this.entries = entries;
 
-		if (typeof entries === 'string') {
+		if (entries === null) {
+		} else if (typeof entries === 'string') {
 			this.link = entries;
 		} else {
 			let children: [ string, SidebarNode ][];

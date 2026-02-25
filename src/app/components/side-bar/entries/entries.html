@@ -21,13 +21,17 @@
 			<nav class="ml-3 border-l border-sidebar-accent/30 pl-2" [class.hidden]="group.collapsed">
 				<app-side-bar-entries [entries]="group.children"></app-side-bar-entries>
 			</nav>
-		} @else {
+		} @else if (entry.link) {
 			<a
 				[routerLink]="entry.link"
 				class="flex items-center w-full rounded px-2 py-1 text-sm text-sidebar-text-muted hover:bg-sidebar-accent/20 hover:text-sidebar-text transition-colors"
 			>
 				{{ entry.name }}
 			</a>
+		} @else {
+			<span class="flex items-center w-full rounded px-2 py-1 mt-1 text-sm text-sidebar-text-muted bg-black/30">
+				{{ entry.name }}
+			</span>
 		}
 	</nav>
 }
