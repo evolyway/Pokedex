@@ -1,8 +1,12 @@
-[
+import type jsonRole from '#types/jsonRole';
+import Camp from '#types/camp';
+import Aura from '#types/aura';
+
+const roles: jsonRole[] = [
 	{
 		"name": "Eterna",
-		"camp": "Solitaire",
-		"aura": "Neutre",
+		"camp": Camp.Solitaire,
+		"aura": Aura.Neutre,
 		"caracteristiques": [
 			"À chaque fois qu'un ennemi du village meurt elle absorbe son pouvoir"
 		],
@@ -20,29 +24,30 @@
 	},
 	{
 		"name": "Jibanyan",
-		"camp": "Yo-Kai",
-		"aura": "Neutre",
+		"camp": Camp.Yokai,
+		"aura": Aura.Neutre,
 		"details":[
 			"Jibanyan est un simple Yo-Kai qui ne possède aucuns pouvoirs."
 		]
 	},
 	{
 		"name": "Robonyan",
-		"camp": "Yo-kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Robonyan peut demander à connaître le rôle d'un joueur, il connaîtra donc son rôle."
 			]
 		},
+		"details": [],
 		"exemples": [
 			"Je suis Robonyan et je décide de connaître le rôle de Tabuki, je verrai : \"Le rôle de Tabuki est : Jibanyan\" si celui-ci est Jibanyan"
 		]
 	},
 	{
 		"name": "Kyubi",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Kyubi peut choisir 3 personnes, et est prévenu si il y a un Oni ou plus parmi ces trois joueurs (Kyubi ne sait pas le nombre d'Onis précisément, il sait juste si il y en a au moins un ou non) "
@@ -57,21 +62,22 @@
 	},
 	{
 		"name": "Robonyan Ultime",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Une nuit sur deux, Robonyan Ultime peut poser une question fermée au Maitre du Yo-Kai World (Une question fermée est une question à laquelle on ne peut y répondre que par oui ou par non)"
 			]
 		},
+		"details": [],
 		"exemples": [
 			"Je suis Robonyan Ultime et je demande au Maitre du Yo-Kai World \"Tabuki est-il en couple ?\" Je verrai : \"Oui\" si Tabuki est en couple."
 		]
 	},
 	{
 		"name": "Obskyurbi",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Obskyurbi peut choisir 3 personnes, et est prévenu si il y a un Perfide ou plus parmi ces trois joueurs (Obskyurbi ne sait pas le nombre de Perfides précisément, il sait juste si il y en a au moins un ou non)"
@@ -86,8 +92,8 @@
 	},
 	{
 		"name": "Égare-dare",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Égare-dare peut choisir de regarder le dernier message pertinent envoyé dans le salon de son choix. (Les salons privés des joueurs ne peuvent être regardés"
@@ -102,8 +108,8 @@
 	},
 	{
 		"name": "Espi",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Espi peut demander à connaître l'aura d'un joueur, il connaîtra donc son aura."
@@ -118,8 +124,8 @@
 	},
 	{
 		"name": "Couchtar",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"caracteristiques": [
 			"Couchtar peut parler la nuit dans le Yo-Kai World, cependant, tout le monde verra ses messages."
 		],
@@ -142,21 +148,22 @@
 	},
 	{
 		"name": "Robonyan F",
-		"camp": "Yo-Kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Robonyan F peut demander à connaître tous les pouvoirs qui ont étés effectués depuis le début de la partie sur la personne choisie."
 			]
 		},
+		"details": [],
 		"exemples": [
 			"Je suis Robonyan F et je décide de connaître les envoûtements qu'à subit Tabuki, je verrai : \"Tabuki a été bloqué, Tabuki a été vampirisé, Tabuki a été protégé des Onis et Tabuki a été regardé par le Robonyan\" si Tabuki a été bloqué, vampirisé, protégé contre les Onis et regardé par le Robonyan."
 		]
 	},
 	{
 		"name": "Mog-nyan",
-		"camp": "Yo-kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Soit, chaque nuit, il demande à connaître le nombre de personnes qui ont utilisés leurs pouvoirs durant la nuit.",
@@ -175,8 +182,8 @@
 	},
 	{
 		"name": "Dr. Néant",
-		"camp": "Yo-kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"nuit": [
 				"Chaque nuit, Dr. Néant peut inviter la personne morte de son choix dans son ticket durant la nuit."
@@ -189,15 +196,18 @@
 	},
 	{
 		"name": "Mamollina",
-		"camp": "Yo-kai",
-		"aura": "Radieuse",
+		"camp": Camp.Yokai,
+		"aura": Aura.Radieuse,
 		"pouvoirs": {
 			"jour": [
 				"Une fois par partie, lors du jour, Mamollina peut choisir d'exposer le rôle de son choix. Le joueur ayant ce rôle sera montré avec 4 autres personnes de la partie dans le salon des annonces (les 5 joueurs exposés sont des joueurs encore en vie)"
 			]
 		},
+		"details": [],
 		"exemples": [
 			"Je suis Mamollina et je demande de spoiler le rôle de Gargaros, je verrai dans le salon des annonces : \"Gargaros est parmis Tabuki, Ghia, Le Sniper, Lace et Elina\" si Tabuki est Gargaros."
 		]
 	}
-]
+];
+
+export default roles;

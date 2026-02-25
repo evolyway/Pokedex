@@ -6,7 +6,8 @@
 		"#services/*": "./src/app/services/*.js",
 		"#components/*": "./src/app/components/*/*.js",
 		"#pages/*": "./src/app/pages/*/*.js",
-		"#public/*": "./public/*"
+		"#public/*": "./public/*",
+		"#data": "./src/assets/roles.js"
 	},
 	"scripts": {
 		"ng": "ng",

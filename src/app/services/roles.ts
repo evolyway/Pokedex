@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Role } from '#types/role';
 import type jsonRole from '#types/jsonRole';
-import RoleList from '#public/roles.json';
+import RoleList from '#data';
 
 @Injectable({
 	providedIn: 'root',
