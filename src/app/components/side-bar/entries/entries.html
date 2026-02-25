@@ -1,5 +1,5 @@
 @for (entry of entriesData; track entry.name) {
-	<div class="my-0.5">
+	<nav class="my-0.5">
 		@let group = entry.group;
 		@if (group) {
 			<button
@@ -18,9 +18,9 @@
 					<span class="flex-1">{{ entry.name }}</span>
 				}
 			</button>
-			<div class="ml-3 border-l border-sidebar-accent/30 pl-2" [class.hidden]="group.collapsed">
+			<nav class="ml-3 border-l border-sidebar-accent/30 pl-2" [class.hidden]="group.collapsed">
 				<app-side-bar-entries [entries]="group.children"></app-side-bar-entries>
-			</div>
+			</nav>
 		} @else {
 			<a
 				[routerLink]="entry.link"
@@ -29,5 +29,5 @@
 				{{ entry.name }}
 			</a>
 		}
-	</div>
+	</nav>
 }
