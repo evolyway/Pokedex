@@ -4,7 +4,7 @@
 		@if (group) {
 			<button
 				(click)="group.toggle()"
-				class="flex items-center w-full gap-1 rounded px-2 py-1 text-left text-sm font-semibold text-[#ffccd3] hover:bg-[#ff546b]/20 transition-colors"
+				class="flex items-center w-full gap-1 rounded px-2 py-1 text-left text-sm font-semibold text-sidebar-text hover:bg-sidebar-accent/20 transition-colors"
 			>
 				<span
 					class="shrink-0 transition-transform duration-200"
@@ -18,13 +18,13 @@
 					<span class="flex-1">{{ entry.name }}</span>
 				}
 			</button>
-			<div class="ml-3 border-l border-[#ff546b]/30 pl-2" [class.hidden]="group.collapsed">
+			<div class="ml-3 border-l border-sidebar-accent/30 pl-2" [class.hidden]="group.collapsed">
 				<app-side-bar-entries [entries]="group.children"></app-side-bar-entries>
 			</div>
 		} @else {
 			<a
 				[routerLink]="entry.link"
-				class="flex items-center w-full rounded px-2 py-1 text-sm text-[#ffa0b0] hover:bg-[#ff546b]/20 hover:text-[#ffccd3] transition-colors"
+				class="flex items-center w-full rounded px-2 py-1 text-sm text-sidebar-text-muted hover:bg-sidebar-accent/20 hover:text-sidebar-text transition-colors"
 			>
 				{{ entry.name }}
 			</a>
