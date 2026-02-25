@@ -14,7 +14,7 @@
 
 			<em class="italic mb-1 text-sm text-gray-700">
 				{{ role.name }} est un rôle
-				@if ( descriptions.length == 0 ) {
+				@if (descriptions.length === 0) {
 					sans caractéristiques ni pouvoirs.
 				} @else {
 					avec
@@ -25,7 +25,7 @@
 							des caractéristiques
 						}
 					}
-					@if ( descriptions.length > role.caracteristiques.length ) {
+					@if (descriptions.length > role.caracteristiques.length) {
 						et
 					}
 					@if (
@@ -54,8 +54,7 @@
 
 			@if (descriptions.length > 0) {
 				<table>
-					<thead>
-					</thead>
+					<thead></thead>
 					<tbody>
 						@for (description of descriptions; track description) {
 							<tr>

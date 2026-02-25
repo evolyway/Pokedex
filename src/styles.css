@@ -2,6 +2,13 @@
 
 @import "tailwindcss";
 
+@theme {
+	--color-sidebar-bg: #3d0117;
+	--color-sidebar-accent: #ff546b;
+	--color-sidebar-text: #ffccd3;
+	--color-sidebar-text-muted: #ffa0b0;
+}
+
 :root {
 	/* bg: 'bg.png' */
 	background-color: #72062aff;
