@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 })
 export class SideBarEntries implements OnInit {
 	@Input() entries!: [string, SidebarNode][];
-	entriesData!: SidebarNodeData[];
+	entriesData: SidebarNodeData[] = [];
 
 	ngOnInit() {
 		this.entriesData = this.entries.map(
