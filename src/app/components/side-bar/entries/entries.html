@@ -26,6 +26,7 @@
 			>
 				<app-side-bar-entries
 					[entries]="group.children"
+					[openDepth]="openDepth > 0 ? openDepth - 1 : 0"
 				></app-side-bar-entries>
 			</nav>
 		} @else if (entry.link) {
