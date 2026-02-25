@@ -34,14 +34,19 @@ class SidebarNodeData {
 		this.entries = entries;
 
 		if (entries === null) {
+			// visible non-clickable lign
 		} else if (typeof entries === 'string') {
+			// link
 			this.link = entries;
 		} else {
+			// groups
 			let children: [ string, SidebarNode ][];
 			if (entries instanceof Array) {
+				// with link
 				this.link = entries[0];
 				children = Object.entries(entries[1]);
 			} else {
+				// without link
 				children = Object.entries(entries);
 			}
 			this.group = {

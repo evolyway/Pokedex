@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, inject, WritableSignal, signal } from '@angular/core';
+import { Component, inject, WritableSignal, signal, OnInit } from '@angular/core';
 import { Roles } from '#services/roles';
 import type { Role } from '#types/role';
 import { RouterModule } from '@angular/router';
@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 	templateUrl: './role-details.html',
 	styleUrl: './role-details.css',
 })
-export class RoleDetails {
+export class RoleDetails implements OnInit {
 	private route = inject(ActivatedRoute);
 	private readonly _role: WritableSignal<Role | undefined> = signal(undefined);
 	public readonly role = this._role.asReadonly();
