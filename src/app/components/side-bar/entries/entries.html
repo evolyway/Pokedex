@@ -1,17 +1,33 @@
 @for (entry of entriesData; track entry.name) {
-	<div>
-		@if (entry.link) {
-			<a [routerLink]="entry.link">
+	<nav class="my-0.5">
+		@let group = entry.group;
+		@if (group) {
+			<button
+				(click)="group.toggle()"
+				class="flex items-center w-full gap-1 rounded px-2 py-1 text-left text-sm font-semibold text-sidebar-text hover:bg-sidebar-accent/20 transition-colors"
+			>
+				<span
+					class="shrink-0 transition-transform duration-200"
+					[class.rotate-90]="!group.collapsed"
+				>&#9654;</span>
+				@if (entry.link) {
+					<a [routerLink]="entry.link" class="flex-1 hover:underline">
+						{{ entry.name }}
+					</a>
+				} @else {
+					<span class="flex-1">{{ entry.name }}</span>
+				}
+			</button>
+			<nav class="ml-3 border-l border-sidebar-accent/30 pl-2" [class.hidden]="group.collapsed">
+				<app-side-bar-entries [entries]="group.children"></app-side-bar-entries>
+			</nav>
+		} @else {
+			<a
+				[routerLink]="entry.link"
+				class="flex items-center w-full rounded px-2 py-1 text-sm text-sidebar-text-muted hover:bg-sidebar-accent/20 hover:text-sidebar-text transition-colors"
+			>
 				{{ entry.name }}
 			</a>
-		} @else {
-			{{ entry.name }}
 		}
-
-		@if (entry.children) {
-			<div class="ml-4">
-				<app-side-bar-entries [entries]="entry.children"></app-side-bar-entries>
-			</div>
-		}
-	</div>
+	</nav>
 }

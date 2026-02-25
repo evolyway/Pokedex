@@ -23,7 +23,11 @@ class SidebarNodeData {
 	name!: string;
 	entries!: SidebarNode;
 	link?: string;
-	children?: [ string, SidebarNode ][];
+	group?: {
+		children: [ string, SidebarNode ][];
+		collapsed: boolean;
+		toggle: () => void;
+	};
 
 	constructor(name: string, entries: SidebarNode) {
 		this.name = name;
@@ -31,11 +35,21 @@ class SidebarNodeData {
 
 		if (typeof entries === 'string') {
 			this.link = entries;
-		} else if (entries instanceof Array) {
-			this.link = entries[0];
-			this.children = Object.entries(entries[1]);
 		} else {
-			this.children = Object.entries(entries);
+			let children: [ string, SidebarNode ][];
+			if (entries instanceof Array) {
+				this.link = entries[0];
+				children = Object.entries(entries[1]);
+			} else {
+				children = Object.entries(entries);
+			}
+			this.group = {
+				children,
+				collapsed: children.length >= 5,
+				toggle: () => {
+					this.group!.collapsed = !this.group!.collapsed;
+				}
+			};
 		}
 	}
 }
