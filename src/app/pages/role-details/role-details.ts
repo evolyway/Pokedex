@@ -9,10 +9,11 @@ import {
 import { Roles } from '#services/roles';
 import type { Role } from '#types/role';
 import { RouterModule } from '@angular/router';
+import { TextCamp } from '#components/text';
 
 @Component({
 	selector: 'app-role-details',
-	imports: [RouterModule],
+	imports: [ RouterModule, TextCamp ],
 	templateUrl: './role-details.html',
 	styleUrl: './role-details.css',
 })

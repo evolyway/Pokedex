@@ -50,7 +50,10 @@
 			</em>
 
 			<p class="mb-3 text-gray-900 flex flex-row gap-4">
-				<span>Camp: {{ role.camp }}</span>
+				<span>
+					Camp:
+					<app-text-camp [camp]="role.camp"></app-text-camp>
+				</span>
 				|
 				<span>Aura: {{ role.aura }}</span>
 			</p>

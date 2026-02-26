@@ -15,6 +15,12 @@
 	background-image: url("./assets/bg.png");
 	background-size: cover;
 	background-attachment: fixed;
+
+	--color-camp-blue: #90d5ff;
+	--color-camp-yellow: #f5ec62;
+	--color-camp-green: #3ded97;
+	--color-camp-pink: #f26b8a;
+	--color-camp-purple: #7a238a;
 }
 
 .text-bubble {
