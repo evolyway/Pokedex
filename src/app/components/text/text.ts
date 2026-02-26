@@ -1,2 +1,3 @@
 import { TextCamp } from './camp/camp';
-export { TextCamp };
+import { TextAura } from './aura/aura';
+export { TextCamp, TextAura };

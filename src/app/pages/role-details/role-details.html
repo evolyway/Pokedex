@@ -55,7 +55,9 @@
 					<app-text-camp [camp]="role.camp"></app-text-camp>
 				</span>
 				|
-				<span>Aura: {{ role.aura }}</span>
+				<span>Aura:
+					<app-text-aura [aura]="role.aura"></app-text-aura>
+				</span>
 			</p>
 
 			@if (descriptions.length > 0) {
