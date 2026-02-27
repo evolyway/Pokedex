@@ -1,10 +1,13 @@
 import { Routes } from '@angular/router';
 import { Home } from '#pages/home';
 import { RoleDetails } from '#pages/role-details';
-import { CampList } from '#pages/camp-list';
+import { RoleList } from '#pages/role-list';
+
+import Camps from '#types/camp';
+import { Role } from '#types/role';
 
 export const routes: Routes = [
 	{ path: '', component: Home },
 	{ path: 'role/:name', component: RoleDetails },
-	{ path: 'camp/:name', component: CampList },
+	{ path: 'camp/:name', component: RoleList, data: { options: Object.values(Camps), optionGetter: (role: Role) => role.camp } },
 ];
