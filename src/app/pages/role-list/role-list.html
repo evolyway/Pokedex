@@ -9,7 +9,7 @@
 				<li class="mb-3">
 					<a
 						class="text-blue-600 hover:underline"
-						href="/role/{{ role.normalizedName }}"
+						[routerLink]="['/role', role.normalizedName]"
 					>
 						{{ role.name }}
 					</a>

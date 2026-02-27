@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { inject } from '@angular/core';
 import { Roles } from '#services/roles';
 import { normalize } from '#lib/text';
@@ -7,7 +7,7 @@ import { Role } from '#types/role';
 
 @Component({
 	selector: 'app-role-list',
-	imports: [],
+	imports: [ RouterModule ],
 	templateUrl: './role-list.html',
 	styleUrl: './role-list.css',
 })
