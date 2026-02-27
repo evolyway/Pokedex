@@ -1,0 +1,20 @@
+<div class="flex flex-col items-center m-3 md:m-6">
+	@let roles = this.roles();
+	@if (roles.length === 0) {
+		<p class="text-bubble">Aucun rôle trouvé.</p>
+	} @else {
+		<p class="text-bubble">{{ roles.length }} rôles trouvés.</p>
+		<ul class="text-bubble mt-3">
+			@for (role of roles; track role.normalizedName) {
+				<li class="mb-3">
+					<a
+						class="text-blue-600 hover:underline"
+						href="/role/{{ role.normalizedName }}"
+					>
+						{{ role.name }}
+					</a>
+				</li>
+			}
+		</ul>
+	}
+</div>
