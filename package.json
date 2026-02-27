@@ -6,6 +6,7 @@
 		"#services/*": "./src/app/services/*.js",
 		"#components/*": "./src/app/components/*/*.js",
 		"#pages/*": "./src/app/pages/*/*.js",
+		"#lib/*": "./src/lib/*.js",
 		"#public/*": "./public/*"
 	},
 	"scripts": {

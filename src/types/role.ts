@@ -1,11 +1,12 @@
 import Camp from '#types/camp';
 import Aura from '#types/aura';
 import type jsonRole from '#types/jsonRole';
+import { normalize } from '#lib/text';
 
 export class Role {
 	constructor(roleData: jsonRole) {
 		this.name = roleData.name;
-		this.normalizedName = Role.normalizeName(roleData.name);
+		this.normalizedName = normalize(roleData.name);
 		this.camp = roleData.camp;
 		this.aura = roleData.aura;
 		this.caracteristiques = roleData.caracteristiques ?? [];
@@ -19,7 +20,7 @@ export class Role {
 		this.seeAlso =
 			roleData.seeAlso?.map((seeAlso) => ({
 				name: seeAlso,
-				normalizedName: Role.normalizeName(seeAlso),
+				normalizedName: normalize(seeAlso),
 			})) ?? [];
 	}
 	name: string;
@@ -39,17 +40,4 @@ export class Role {
 	}[];
 
 	normalizedName: string;
-
-	static normalizeName(name: string): string {
-		return name
-			.toLowerCase()
-			.replaceAll(/[- ]/g, '_')
-			.replaceAll(/[éèêë]/g, 'e')
-			.replaceAll(/[àâä]/g, 'a')
-			.replaceAll(/[îï]/g, 'i')
-			.replaceAll(/[ôö]/g, 'o')
-			.replaceAll(/[ùûü]/g, 'u')
-			.replaceAll('ç', 'c')
-			.replaceAll(/[^a-z0-9_]/g, '');
-	}
 }
