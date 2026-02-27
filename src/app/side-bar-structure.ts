@@ -18,19 +18,22 @@ const getRolesGrouped: (
 	roles: Role[],
 	groupBy: (role: Role) => string,
 ) => SidebarNode = (roles: Role[], key: (role: Role) => string) =>
-	/* { "camp": { "name": "/role/normalizedName" } } */
+	/* { "camp": [ "/camp/normalizedCamp", { "name": "/role/normalizedName" } ] } */
 	Object.entries(groupBy(roles, key)).reduce(
 		(acc, [camp, roles]) => ({
 			...acc,
-			[camp]: roles!.reduce(
-				(acc, role) => ({
-					...acc,
-					[role.name]: `/role/${role.normalizedName}`,
-				}),
-				{} as Record<string, string>,
-			),
+			[camp]: [
+				`/camp/${camp.toLowerCase()}`,
+				roles!.reduce(
+					(acc, role) => ({
+						...acc,
+						[role.name]: `/role/${role.normalizedName}`,
+					}),
+					{} as Record<string, string>,
+				),
+			],
 		}),
-		{} as Record<Camp, Record<string, string>>,
+		{} as Record<Camp, [string, Record<string, string>]>,
 	);
 
 export const getSidebarStructure: (roles: Role[]) => SidebarTree = (
