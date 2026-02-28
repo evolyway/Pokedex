@@ -13,7 +13,7 @@ import { CampColoredText, AuraColoredText } from '#components/colored-text';
 
 @Component({
 	selector: 'app-role-details',
-	imports: [ RouterModule, CampColoredText, AuraColoredText ],
+	imports: [RouterModule, CampColoredText, AuraColoredText],
 	templateUrl: './role-details.html',
 	styleUrl: './role-details.css',
 })
