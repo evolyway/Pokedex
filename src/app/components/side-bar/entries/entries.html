@@ -13,7 +13,7 @@
 					>&#9654;</span
 				>
 				@if (entry.link) {
-					<a [routerLink]="entry.link" class="flex-1 hover:underline">
+					<a [routerLink]="entry.link" class="flex-1 hover:underline" (click)="$event.stopPropagation(); group.collapsed = false">
 						{{ entry.name }}
 					</a>
 				} @else {
