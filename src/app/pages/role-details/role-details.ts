@@ -9,15 +9,20 @@ import {
 import { Roles } from '#services/roles';
 import type { Role } from '#types/role';
 import { RouterModule } from '@angular/router';
-import { TextCamp, TextAura } from '#components/text';
+import { getColor as getCampColor } from '#types/camp';
+import { getColor as getAuraColor } from '#types/aura';
+import { ColoredText } from '#components/colored-text';
 
 @Component({
 	selector: 'app-role-details',
-	imports: [ RouterModule, TextCamp, TextAura ],
+	imports: [ RouterModule, ColoredText ],
 	templateUrl: './role-details.html',
 	styleUrl: './role-details.css',
 })
 export class RoleDetails implements OnInit {
+	getCampColor = getCampColor;
+	getAuraColor = getAuraColor;
+
 	private route = inject(ActivatedRoute);
 	private readonly _role: WritableSignal<Role | undefined> =
 		signal(undefined);

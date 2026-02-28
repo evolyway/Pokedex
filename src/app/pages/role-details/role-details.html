@@ -52,11 +52,19 @@
 			<p class="mb-3 text-gray-900 flex flex-row gap-4">
 				<span>
 					Camp:
-					<app-text-camp [camp]="role.camp"></app-text-camp>
+					<app-colored-text
+						[value]="role.camp"
+						[getColor]="getCampColor"
+						[routerLink]="['/camp']"
+					></app-colored-text>
 				</span>
 				|
 				<span>Aura:
-					<app-text-aura [aura]="role.aura"></app-text-aura>
+					<app-colored-text
+						[value]="role.aura"
+						[getColor]="getAuraColor"
+						[routerLink]="['/aura']"
+					></app-colored-text>
 				</span>
 			</p>
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Aura } from './aura';
+import { ColoredText } from './colored-text';
 
-describe('Aura', () => {
-  let component: Aura;
-  let fixture: ComponentFixture<Aura>;
+describe('ColoredText', () => {
+  let component: ColoredText<string>;
+  let fixture: ComponentFixture<ColoredText<string>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Aura]
+      imports: [ColoredText],
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Aura);
+    fixture = TestBed.createComponent(ColoredText);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

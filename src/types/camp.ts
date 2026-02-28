@@ -8,18 +8,25 @@ enum Camp {
 export default Camp;
 
 export function getColor(camp: Camp): string {
+	let color: string;
 	switch (camp) {
 		case Camp.Yokai:
-			return 'green';
+			color = 'green';
+			break;
 		case Camp.Oni:
-			return 'pink';
+			color = 'pink';
+			break;
 		case Camp.Perfid:
-			return 'purple';
+			color = 'purple';
+			break;
 		case Camp.Solitaire:
-			return 'blue';
+			color = 'blue';
+			break;
 		case Camp.Special:
-			return 'yellow';
+			color = 'yellow';
+			break;
 		default:
 			throw new Error(`Unknown camp: ${camp}`);
 	}
+	return `var(--color-camp-${color})`;
 }

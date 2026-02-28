@@ -6,14 +6,19 @@ enum Aura {
 export default Aura;
 
 export function getColor(aura: Aura): string {
+	let color: string;
 	switch (aura) {
 		case Aura.Radieuse:
-			return 'blue';
+			color = 'blue';
+			break;
 		case Aura.Neutre:
-			return 'yellow';
+			color = 'yellow';
+			break;
 		case Aura.Obscure:
-			return 'red';
+			color = 'red';
+			break;
 		default:
 			throw new Error(`Unknown aura: ${aura}`);
 	}
+	return `var(--color-aura-${color})`;
 }
