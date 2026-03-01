@@ -44,7 +44,6 @@ describe('RoleDetails', () => {
 				name: 'example',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 			})
 		]);
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
@@ -66,7 +65,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe('test est un rôle sans caractéristiques ni pouvoirs.');
@@ -77,7 +75,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1']
 			});
 			const description = await getDescriptionSentences(role);
@@ -89,7 +86,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1', 'caractéristique2']
 			});
 			const description = await getDescriptionSentences(role);
@@ -101,7 +97,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				pouvoirs: {
 					jour: ['pouvoir1']
 				}
@@ -115,7 +110,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				pouvoirs: {
 					jour: ['pouvoir1', 'pouvoir2']
 				}
@@ -129,7 +123,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1'],
 				pouvoirs: {
 					jour: ['pouvoir1']
@@ -144,7 +137,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1', 'caractéristique2'],
 				pouvoirs: {
 					jour: ['pouvoir1', 'pouvoir2']
@@ -159,7 +151,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1'],
 				pouvoirs: {
 					jour: ['pouvoir1', 'pouvoir2']
@@ -174,7 +165,6 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				caracteristiques: ['caractéristique1', 'caractéristique2'],
 				pouvoirs: {
 					jour: ['pouvoir1']
@@ -190,7 +180,6 @@ describe('RoleDetails', () => {
 			name: 'test',
 			camp: Camp.Oni,
 			aura: Aura.Neutre,
-			details: [],
 			caracteristiques: ['caractéristique1', 'caractéristique2'],
 			pouvoirs: {
 				jour: ['pouvoir de jour 1', 'pouvoir de jour 2'],
@@ -224,13 +213,11 @@ describe('RoleDetails', () => {
 				name: 'role1',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 			}),
 			new Role({
 				name: 'role2',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 			})
 		];
 		const { harness, compiled } = await compileComponents('/roles/role1', roles);
@@ -262,7 +249,6 @@ describe('RoleDetails', () => {
 			name: 'test',
 			camp: Camp.Oni,
 			aura: Aura.Neutre,
-			details: [],
 			exemples: ['exemple1', 'exemple2']
 		});
 		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
@@ -279,14 +265,12 @@ describe('RoleDetails', () => {
 				name: 'role1',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 				seeAlso: ['role2']
 			}),
 			new Role({
 				name: 'role2',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				details: [],
 			})
 		];
 		const { compiled } = await compileComponents('/roles/role1', roles);
