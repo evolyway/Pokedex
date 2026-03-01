@@ -26,8 +26,7 @@ describe('RoleDetails', () => {
 	}
 
 	it.concurrent('should create', async () => {
-		await compileComponents();
-		const fixture = TestBed.createComponent(RoleDetails);
+		const { fixture } = await compileComponents();
 		const componentInstance = fixture.componentInstance;
 		expect(componentInstance).toBeTruthy();
 	});
