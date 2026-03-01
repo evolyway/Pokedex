@@ -124,5 +124,65 @@ describe('RoleDetails', () => {
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe('test est un rôle avec des pouvoirs .');
 		});
+
+		it('role with 1 characteristic and 1 power', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				caracteristiques: ['caractéristique1'],
+				pouvoirs: {
+					jour: ['pouvoir1']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec une caractéristique et un pouvoir .');
+		});
+
+		it('role with multiple characteristics and multiple powers', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				caracteristiques: ['caractéristique1', 'caractéristique2'],
+				pouvoirs: {
+					jour: ['pouvoir1', 'pouvoir2']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec des caractéristiques et des pouvoirs .');
+		});
+
+		it('role with 1 characteristic and multiple powers', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				caracteristiques: ['caractéristique1'],
+				pouvoirs: {
+					jour: ['pouvoir1', 'pouvoir2']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec une caractéristique et des pouvoirs .');
+		});
+
+		it('role with multiple characteristics and 1 power', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				caracteristiques: ['caractéristique1', 'caractéristique2'],
+				pouvoirs: {
+					jour: ['pouvoir1']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec des caractéristiques et un pouvoir .');
+		});
 	});
 });
