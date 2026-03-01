@@ -243,4 +243,61 @@ describe('RoleDetails', () => {
 		expect(compiled.textContent).toContain('role2');
 		expect(compiled.textContent).not.toContain('role1');
 	});
+
+	it('should show details if any', async () => {
+		const role = new Role({
+			name: 'test',
+			camp: Camp.Oni,
+			aura: Aura.Neutre,
+			details: ['detail1', 'detail2'],
+		});
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).toContain('detail1');
+		expect(compiled.textContent).toContain('detail2');
+	});
+
+	it('should show examples if any', async () => {
+		const role = new Role({
+			name: 'test',
+			camp: Camp.Oni,
+			aura: Aura.Neutre,
+			details: [],
+			exemples: ['exemple1', 'exemple2']
+		});
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		const exemplesElement = Array.from(compiled.querySelectorAll('em'));
+		expect(exemplesElement.length).toBeGreaterThan(1);
+		expect(exemplesElement.some(el => el.textContent?.includes('exemple1'))).toBeTruthy();
+		expect(exemplesElement.some(el => el.textContent?.includes('exemple2'))).toBeTruthy();
+	});
+
+	it('should redirect when clicking any see also role', async () => {
+		const roles = [
+			new Role({
+				name: 'role1',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				seeAlso: ['role2']
+			}),
+			new Role({
+				name: 'role2',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+			})
+		];
+		const { compiled } = await compileComponents('/roles/role1', roles);
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		const seeAlsoLink = compiled.querySelector('a');
+		expect(seeAlsoLink).not.toBeNull();
+		expect(seeAlsoLink?.textContent).toBe('role2');
+
+		seeAlsoLink?.dispatchEvent(new MouseEvent('click'));
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).toContain('role2');
+		expect(compiled.textContent).not.toContain('Role 1');
+	});
 });
