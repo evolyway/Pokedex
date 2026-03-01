@@ -17,7 +17,15 @@ describe('RoleDetails', () => {
 			imports: [RoleDetails],
 			providers: [
 				provideRouter([{ path: 'roles/:name', component: RoleDetails }]),
-				{ provide: Roles, useValue: { list: [] }}
+				{ provide: Roles, useValue: { list: [
+						new Role({
+							name: 'minimal',
+							camp: Camp.Oni,
+							aura: Aura.Neutre,
+							details: [],
+						}),
+					]
+				}}
 			]
 		}).compileComponents();
 		harness = await RouterTestingHarness.create();
@@ -35,5 +43,13 @@ describe('RoleDetails', () => {
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).toBeUndefined();
 		expect(compiled.textContent).toContain('Rôle non trouvé.');
+	});
+
+	it('should show role details if role exists', async () => {
+		const activeComponent = await harness.navigateByUrl('/roles/minimal') as RoleDetails;
+		const compiled = harness.fixture.nativeElement as HTMLElement;
+		expect(activeComponent).toBeInstanceOf(RoleDetails);
+		expect(activeComponent.role).not.toBeUndefined();
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 	});
 });
