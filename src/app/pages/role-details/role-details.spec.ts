@@ -185,4 +185,37 @@ describe('RoleDetails', () => {
 			expect(description).toBe('test est un rôle avec des caractéristiques et un pouvoir .');
 		});
 	});
+
+	it('description table should have correct characteristics, powers and details', async () => {
+		const role = new Role({
+			name: 'test',
+			camp: Camp.Oni,
+			aura: Aura.Neutre,
+			details: ['detail1', 'detail2'],
+			caracteristiques: ['caractéristique1', 'caractéristique2'],
+			pouvoirs: {
+				jour: ['pouvoir de jour 1', 'pouvoir de jour 2'],
+				nuit: ['pouvoir de nuit 1', 'pouvoir de nuit 2']
+			}
+		});
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+
+		const descriptionRows = Array.from(compiled.querySelectorAll('table tr')).map(row => Array.from(row.querySelectorAll('td')).map(cell => cell.textContent?.trim() || ''));
+		expect(descriptionRows.length).toBe(6); // 2 details + 2 day powers + 2 night powers
+		expect(descriptionRows.every(cells => cells.length === 2)).toBeTruthy();
+
+		expect(descriptionRows[0][0]).toBe('Caractéristique :');
+		expect(descriptionRows[0][1]).toBe('caractéristique1');
+		expect(descriptionRows[1][0]).toBe('Caractéristique :');
+		expect(descriptionRows[1][1]).toBe('caractéristique2');
+		expect(descriptionRows[2][0]).toBe('Pouvoir de jour :');
+		expect(descriptionRows[2][1]).toBe('pouvoir de jour 1');
+		expect(descriptionRows[3][0]).toBe('Pouvoir de jour :');
+		expect(descriptionRows[3][1]).toBe('pouvoir de jour 2');
+		expect(descriptionRows[4][0]).toBe('Pouvoir de nuit :');
+		expect(descriptionRows[4][1]).toBe('pouvoir de nuit 1');
+		expect(descriptionRows[5][0]).toBe('Pouvoir de nuit :');
+		expect(descriptionRows[5][1]).toBe('pouvoir de nuit 2');
+	});
 });
