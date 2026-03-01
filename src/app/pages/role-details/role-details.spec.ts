@@ -10,44 +10,44 @@ import Camp from '#types/camp';
 import Aura from '#types/aura';
 
 describe('RoleDetails', () => {
-	let harness: RouterTestingHarness;
-
-	beforeEach(async () => {
+	async function compileComponents(url: string = '/', roles: Role[] = []) {
 		await TestBed.configureTestingModule({
 			imports: [RoleDetails],
 			providers: [
 				provideRouter([{ path: 'roles/:name', component: RoleDetails }]),
-				{ provide: Roles, useValue: { list: [
-						new Role({
-							name: 'minimal',
-							camp: Camp.Oni,
-							aura: Aura.Neutre,
-							details: [],
-						}),
-					]
-				}}
+				{ provide: Roles, useValue: { list: roles }}
 			]
 		}).compileComponents();
-		harness = await RouterTestingHarness.create();
-	});
+		const harness = await RouterTestingHarness.create();
+		const activeComponent = await harness.navigateByUrl(url) as RoleDetails;
+		const fixture = harness.fixture;
+		const compiled = fixture.nativeElement as HTMLElement;
+		return { harness, activeComponent, fixture, compiled };
+	}
 
-	it.concurrent('should create', () => {
+	it.concurrent('should create', async () => {
+		await compileComponents();
 		const fixture = TestBed.createComponent(RoleDetails);
 		const componentInstance = fixture.componentInstance;
 		expect(componentInstance).toBeTruthy();
 	});
 
 	it('should show "Role not found" if role does not exist', async () => {
-		const activeComponent = await harness.navigateByUrl('/roles/nonexistent') as RoleDetails;
-		const compiled = harness.fixture.nativeElement as HTMLElement;
+		const { activeComponent, compiled } = await compileComponents('/roles/nonexistent');
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).toBeUndefined();
 		expect(compiled.textContent).toContain('Rôle non trouvé.');
 	});
 
 	it('should show role details if role exists', async () => {
-		const activeComponent = await harness.navigateByUrl('/roles/minimal') as RoleDetails;
-		const compiled = harness.fixture.nativeElement as HTMLElement;
+		const { activeComponent, compiled } = await compileComponents('/roles/example', [
+			new Role({
+				name: 'example',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+			})
+		]);
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role).not.toBeUndefined();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
