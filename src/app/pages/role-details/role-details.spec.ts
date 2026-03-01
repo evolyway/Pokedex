@@ -96,5 +96,33 @@ describe('RoleDetails', () => {
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe('test est un rôle avec des caractéristiques .');
 		});
+
+		it('role with 1 power', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				pouvoirs: {
+					jour: ['pouvoir1']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec un pouvoir .');
+		});
+
+		it('role with multiple powers', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+				pouvoirs: {
+					jour: ['pouvoir1', 'pouvoir2']
+				}
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle avec des pouvoirs .');
+		});
 	});
 });
