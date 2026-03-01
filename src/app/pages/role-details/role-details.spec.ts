@@ -218,4 +218,30 @@ describe('RoleDetails', () => {
 		expect(descriptionRows[5][0]).toBe('Pouvoir de nuit :');
 		expect(descriptionRows[5][1]).toBe('pouvoir de nuit 2');
 	});
+
+	it('should update role details when navigating to another role', async () => {
+		const roles = [
+			new Role({
+				name: 'role1',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+			}),
+			new Role({
+				name: 'role2',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+			})
+		];
+		const { harness, compiled } = await compileComponents('/roles/role1', roles);
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).toContain('role1');
+		expect(compiled.textContent).not.toContain('role2');
+
+		await harness.navigateByUrl('/roles/role2');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).toContain('role2');
+		expect(compiled.textContent).not.toContain('role1');
+	});
 });
