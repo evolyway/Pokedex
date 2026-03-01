@@ -185,12 +185,12 @@ describe('RoleDetails', () => {
 		});
 	});
 
-	it('description table should have correct characteristics, powers and details', async () => {
+	it('description table should have correct characteristics and powers', async () => {
 		const role = new Role({
 			name: 'test',
 			camp: Camp.Oni,
 			aura: Aura.Neutre,
-			details: ['detail1', 'detail2'],
+			details: [],
 			caracteristiques: ['caractéristique1', 'caractéristique2'],
 			pouvoirs: {
 				jour: ['pouvoir de jour 1', 'pouvoir de jour 2'],
@@ -201,7 +201,7 @@ describe('RoleDetails', () => {
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 
 		const descriptionRows = Array.from(compiled.querySelectorAll('table tr')).map(row => Array.from(row.querySelectorAll('td')).map(cell => cell.textContent?.trim() || ''));
-		expect(descriptionRows.length).toBe(6); // 2 details + 2 day powers + 2 night powers
+		expect(descriptionRows.length).toBe(6); // 2 characteristic + 2 day powers + 2 night powers
 		expect(descriptionRows.every(cells => cells.length === 2)).toBeTruthy();
 
 		expect(descriptionRows[0][0]).toBe('Caractéristique :');
