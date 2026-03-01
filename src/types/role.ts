@@ -13,7 +13,7 @@ export class Role {
 			jour: roleData.pouvoirs?.jour ?? [],
 			nuit: roleData.pouvoirs?.nuit ?? [],
 		};
-		this.details = roleData.details;
+		this.details = roleData.details ?? [];
 		this.exemples = roleData.exemples ?? [];
 		this.image = roleData.image ?? `roles/${this.normalizedName}.png`;
 		this.seeAlso =
