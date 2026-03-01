@@ -52,4 +52,25 @@ describe('RoleDetails', () => {
 		expect(activeComponent.role).not.toBeUndefined();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 	});
+
+	describe('generated description sentences', () => {
+		async function getDescriptionSentences(role: Role) {
+			const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+			expect(compiled.textContent).not.toBe('Rôle non trouvé.');
+			const descriptionElement = compiled.querySelector('em');
+			expect(descriptionElement).not.toBeNull();
+			return descriptionElement!.textContent!.replaceAll(/\s+/g, ' ').trim();
+		}
+
+		it('role without anything', async () => {
+			const role = new Role({
+				name: 'test',
+				camp: Camp.Oni,
+				aura: Aura.Neutre,
+				details: [],
+			});
+			const description = await getDescriptionSentences(role);
+			expect(description).toBe('test est un rôle sans caractéristiques ni pouvoirs.');
+		});
+	});
 });
