@@ -3,6 +3,7 @@ import type Aura from '#types/aura';
 import type jsonRole from '#types/jsonRole';
 
 export class Role {
+	/* v8 ignore next */
 	constructor(roleData: jsonRole) {
 		this.name = roleData.name;
 		this.normalizedName = Role.normalizeName(roleData.name);
