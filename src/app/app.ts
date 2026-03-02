@@ -12,18 +12,12 @@ import { getSidebarStructure } from './side-bar-structure';
 	styleUrl: './app.css',
 })
 export class App implements OnInit {
-	sidebarOpen = signal(true);
+	sidebarOpen = signal(false);
 	roleService = inject(Roles);
 	sidebarData = getSidebarStructure(this.roleService.list);
 
 	ngOnInit() {
 		if (typeof window === 'undefined') return;
-
-		this.resetSidebar();
-		window.addEventListener('resize', this.resetSidebar.bind(this));
-	}
-
-	resetSidebar() {
 		this.sidebarOpen.set(window.innerWidth >= 1024);
 	}
 
