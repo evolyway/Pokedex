@@ -75,5 +75,19 @@ describe('Role', () => {
 			const role = new Role(roleData as jsonRole);
 			expect(role.image).toBe(expected);
 		});
+
+		test('should correctly map seeAlso', () => {
+			const roleData = {
+				...exempleJsonRole[0],
+				seeAlso: ['Related Role'],
+			};
+			const role = new Role(roleData as jsonRole);
+			expect(role.seeAlso).toEqual([
+				{
+					name: 'Related Role',
+					normalizedName: 'related_role',
+				},
+			]);
+		});
 	});
 });
