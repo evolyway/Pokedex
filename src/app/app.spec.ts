@@ -1,15 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 
-import { Roles } from '#services/roles';
-
 describe('App', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [App],
-			providers: [
-				{ provide: Roles, useValue: { list: [] } },
-			],
 		}).compileComponents();
 	});
 
