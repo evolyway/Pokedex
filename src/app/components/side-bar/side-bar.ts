@@ -21,7 +21,7 @@ export class SideBar implements OnInit {
 	}
 }
 
-class SidebarNodeData {
+export class SidebarNodeData {
 	name!: string;
 	entries!: SidebarNode;
 	link?: string;
