@@ -1,4 +1,4 @@
-@for (entry of entriesData; track entry.name) {
+@for (entry of entriesData(); track entry.name) {
 	<nav class="my-0.5">
 		@let group = entry.group;
 		@if (group) {
@@ -26,7 +26,7 @@
 			>
 				<app-side-bar
 					[structure]="group.children"
-					[openDepth]="openDepth > 0 ? openDepth - 1 : 0"
+					[openDepth]="openDepth() > 0 ? openDepth() - 1 : 0"
 				></app-side-bar>
 			</nav>
 		} @else if (entry.link) {
