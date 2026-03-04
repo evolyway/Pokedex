@@ -124,4 +124,64 @@ describe('SideBar', () => {
 		expect(link).toBeTruthy();
 		expect(link!.getAttribute('href')).toBe('/example');
 	});
+
+	describe('render all types of entries', () => {
+		it('should render null entry', () => {
+			fixture.componentRef.setInput('structure', {
+				NullEntry: null,
+			});
+			fixture.detectChanges();
+			const compiled = fixture.nativeElement as HTMLElement;
+			expect(compiled.textContent).toContain('NullEntry');
+			expect(compiled.querySelector('button')).toBeNull(); // No group
+			expect(compiled.querySelector('a')).toBeNull(); // No link
+		});
+
+		it('should render link entry', () => {
+			fixture.componentRef.setInput('structure', {
+				LinkEntry: '/example',
+			});
+			fixture.detectChanges();
+			const compiled = fixture.nativeElement as HTMLElement;
+			expect(compiled.querySelector('button')).toBeNull(); // No group
+			const link = compiled.querySelector('a');
+			expect(link).toBeTruthy();
+			expect(link!.getAttribute('href')).toBe('/example');
+			expect(link!.textContent).toContain('LinkEntry');
+		});
+
+		it('should render group entry', () => {
+			fixture.componentRef.setInput('structure', {
+				GroupEntry: {
+					SubEntry: null,
+				},
+			});
+			fixture.detectChanges();
+			const compiled = fixture.nativeElement as HTMLElement;
+			const button = compiled.querySelector('button');
+			expect(button).toBeTruthy();
+			expect(button!.textContent).toContain('GroupEntry');
+			expect(compiled.querySelector('a')).toBeNull(); // No link
+			const child = compiled.querySelector('nav nav');
+			expect(child).toBeTruthy();
+			expect(child!.textContent).toContain('SubEntry');
+		});
+
+		it('should render group with link entry', () => {
+			fixture.componentRef.setInput('structure', {
+				GroupWithLink: ['/example', { SubEntry: null }],
+			});
+			fixture.detectChanges();
+			const compiled = fixture.nativeElement as HTMLElement;
+			const button = compiled.querySelector('button');
+			expect(button).toBeTruthy();
+			const link = button!.querySelector('a');
+			expect(link).toBeTruthy();
+			expect(link!.getAttribute('href')).toBe('/example');
+			expect(link!.textContent).toContain('GroupWithLink');
+			const child = compiled.querySelector('nav nav');
+			expect(child).toBeTruthy();
+			expect(child!.textContent).toContain('SubEntry');
+		});
+	});
 });
