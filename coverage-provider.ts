@@ -28,7 +28,7 @@ export default {
 		 * This avoids calling any private methods directly.
 		 */
 		class PerFileCoverageProvider extends V8CoverageProvider {
-			override async generateCoverage({ allTestsRun }: { allTestsRun: boolean }) {
+			override async generateCoverage(_: { allTestsRun: boolean }) {
 				const allCoverageFiles = new Map(this.coverageFiles);
 				const finalMap = this.createCoverageMap();
 
