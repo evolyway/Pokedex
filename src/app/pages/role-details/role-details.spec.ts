@@ -10,7 +10,7 @@ import Camp from '#types/camp';
 import Aura from '#types/aura';
 
 describe('RoleDetails', () => {
-	async function compileComponents(url: string = '/', roles: Role[] = []) {
+	async function compileComponents(url = '/', roles: Role[] = []) {
 		await TestBed.configureTestingModule({
 			imports: [RoleDetails],
 			providers: [
