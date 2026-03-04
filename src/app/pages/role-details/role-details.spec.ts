@@ -65,7 +65,7 @@ describe('RoleDetails', () => {
 				`/role/${role.name}`,
 				[role],
 			);
-			expect(compiled.textContent).not.toBe('Rôle non trouvé.');
+			expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 			const descriptionElement = compiled.querySelector('em');
 			expect(descriptionElement).not.toBeNull();
 			return descriptionElement!
