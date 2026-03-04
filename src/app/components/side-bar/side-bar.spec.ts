@@ -10,9 +10,7 @@ describe('SideBar', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [SideBar],
-			providers: [
-				provideRouter([]),
-			]
+			providers: [provideRouter([])],
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SideBar);
@@ -57,7 +55,10 @@ describe('SideBar', () => {
 
 		it('with children and a link', () => {
 			const children = { Child2: null };
-			const node = new SidebarNodeData('Node4', ['http://example.com', children]);
+			const node = new SidebarNodeData('Node4', [
+				'http://example.com',
+				children,
+			]);
 			expect(node.name).toBe('Node4');
 			expect(node.entries).toEqual(['http://example.com', children]);
 			expect(node.link).toBe('http://example.com');
@@ -90,7 +91,10 @@ describe('SideBar', () => {
 		expect(entriesData[2].entries).toEqual({ Subsection1: null });
 
 		expect(entriesData[3].name).toBe('Section4');
-		expect(entriesData[3].entries).toEqual(['http://example.com', { Subsection2: null }]);
+		expect(entriesData[3].entries).toEqual([
+			'http://example.com',
+			{ Subsection2: null },
+		]);
 	});
 
 	it('should creaate the nested structure correctly', async () => {

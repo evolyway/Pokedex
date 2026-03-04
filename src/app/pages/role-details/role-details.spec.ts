@@ -14,12 +14,16 @@ describe('RoleDetails', () => {
 		await TestBed.configureTestingModule({
 			imports: [RoleDetails],
 			providers: [
-				provideRouter([{ path: 'roles/:name', component: RoleDetails }]),
-				{ provide: Roles, useValue: { list: roles }}
-			]
+				provideRouter([
+					{ path: 'roles/:name', component: RoleDetails },
+				]),
+				{ provide: Roles, useValue: { list: roles } },
+			],
 		}).compileComponents();
 		const harness = await RouterTestingHarness.create();
-		const activeComponent = await harness.navigateByUrl(url) as RoleDetails;
+		const activeComponent = (await harness.navigateByUrl(
+			url,
+		)) as RoleDetails;
 		const fixture = harness.fixture;
 		const compiled = fixture.nativeElement as HTMLElement;
 		return { harness, activeComponent, fixture, compiled };
@@ -32,20 +36,24 @@ describe('RoleDetails', () => {
 	});
 
 	it('should show "Role not found" if role does not exist', async () => {
-		const { activeComponent, compiled } = await compileComponents('/roles/nonexistent');
+		const { activeComponent, compiled } =
+			await compileComponents('/roles/nonexistent');
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).toBeUndefined();
 		expect(compiled.textContent).toContain('Rôle non trouvé.');
 	});
 
 	it('should show role details if role exists', async () => {
-		const { activeComponent, compiled } = await compileComponents('/roles/example', [
-			new Role({
-				name: 'example',
-				camp: Camp.Oni,
-				aura: Aura.Neutre,
-			})
-		]);
+		const { activeComponent, compiled } = await compileComponents(
+			'/roles/example',
+			[
+				new Role({
+					name: 'example',
+					camp: Camp.Oni,
+					aura: Aura.Neutre,
+				}),
+			],
+		);
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role).not.toBeUndefined();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
@@ -53,11 +61,16 @@ describe('RoleDetails', () => {
 
 	describe('generated description sentences', () => {
 		async function getDescriptionSentences(role: Role) {
-			const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+			const { compiled } = await compileComponents(
+				`/roles/${role.name}`,
+				[role],
+			);
 			expect(compiled.textContent).not.toBe('Rôle non trouvé.');
 			const descriptionElement = compiled.querySelector('em');
 			expect(descriptionElement).not.toBeNull();
-			return descriptionElement!.textContent!.replaceAll(/\s+/g, ' ').trim();
+			return descriptionElement!
+				.textContent!.replaceAll(/\s+/g, ' ')
+				.trim();
 		}
 
 		it('role without anything', async () => {
@@ -67,7 +80,9 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle sans caractéristiques ni pouvoirs.');
+			expect(description).toBe(
+				'test est un rôle sans caractéristiques ni pouvoirs.',
+			);
 		});
 
 		it('role with 1 characteristic', async () => {
@@ -75,10 +90,12 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				caracteristiques: ['caractéristique1']
+				caracteristiques: ['caractéristique1'],
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec une caractéristique .');
+			expect(description).toBe(
+				'test est un rôle avec une caractéristique .',
+			);
 		});
 
 		it('role with multiple characteristics', async () => {
@@ -86,10 +103,12 @@ describe('RoleDetails', () => {
 				name: 'test',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				caracteristiques: ['caractéristique1', 'caractéristique2']
+				caracteristiques: ['caractéristique1', 'caractéristique2'],
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec des caractéristiques .');
+			expect(description).toBe(
+				'test est un rôle avec des caractéristiques .',
+			);
 		});
 
 		it('role with 1 power', async () => {
@@ -98,8 +117,8 @@ describe('RoleDetails', () => {
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
 				pouvoirs: {
-					jour: ['pouvoir1']
-				}
+					jour: ['pouvoir1'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe('test est un rôle avec un pouvoir .');
@@ -111,8 +130,8 @@ describe('RoleDetails', () => {
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
 				pouvoirs: {
-					jour: ['pouvoir1', 'pouvoir2']
-				}
+					jour: ['pouvoir1', 'pouvoir2'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe('test est un rôle avec des pouvoirs .');
@@ -125,11 +144,13 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 				caracteristiques: ['caractéristique1'],
 				pouvoirs: {
-					jour: ['pouvoir1']
-				}
+					jour: ['pouvoir1'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec une caractéristique et un pouvoir .');
+			expect(description).toBe(
+				'test est un rôle avec une caractéristique et un pouvoir .',
+			);
 		});
 
 		it('role with multiple characteristics and multiple powers', async () => {
@@ -139,11 +160,13 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 				caracteristiques: ['caractéristique1', 'caractéristique2'],
 				pouvoirs: {
-					jour: ['pouvoir1', 'pouvoir2']
-				}
+					jour: ['pouvoir1', 'pouvoir2'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec des caractéristiques et des pouvoirs .');
+			expect(description).toBe(
+				'test est un rôle avec des caractéristiques et des pouvoirs .',
+			);
 		});
 
 		it('role with 1 characteristic and multiple powers', async () => {
@@ -153,11 +176,13 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 				caracteristiques: ['caractéristique1'],
 				pouvoirs: {
-					jour: ['pouvoir1', 'pouvoir2']
-				}
+					jour: ['pouvoir1', 'pouvoir2'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec une caractéristique et des pouvoirs .');
+			expect(description).toBe(
+				'test est un rôle avec une caractéristique et des pouvoirs .',
+			);
 		});
 
 		it('role with multiple characteristics and 1 power', async () => {
@@ -167,11 +192,13 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 				caracteristiques: ['caractéristique1', 'caractéristique2'],
 				pouvoirs: {
-					jour: ['pouvoir1']
-				}
+					jour: ['pouvoir1'],
+				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec des caractéristiques et un pouvoir .');
+			expect(description).toBe(
+				'test est un rôle avec des caractéristiques et un pouvoir .',
+			);
 		});
 	});
 
@@ -183,15 +210,25 @@ describe('RoleDetails', () => {
 			caracteristiques: ['caractéristique1', 'caractéristique2'],
 			pouvoirs: {
 				jour: ['pouvoir de jour 1', 'pouvoir de jour 2'],
-				nuit: ['pouvoir de nuit 1', 'pouvoir de nuit 2']
-			}
+				nuit: ['pouvoir de nuit 1', 'pouvoir de nuit 2'],
+			},
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+			role,
+		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 
-		const descriptionRows = Array.from(compiled.querySelectorAll('table tr')).map(row => Array.from(row.querySelectorAll('td')).map(cell => cell.textContent?.trim() || ''));
+		const descriptionRows = Array.from(
+			compiled.querySelectorAll('table tr'),
+		).map((row) =>
+			Array.from(row.querySelectorAll('td')).map(
+				(cell) => cell.textContent?.trim() || '',
+			),
+		);
 		expect(descriptionRows.length).toBe(6); // 2 characteristic + 2 day powers + 2 night powers
-		expect(descriptionRows.every(cells => cells.length === 2)).toBeTruthy();
+		expect(
+			descriptionRows.every((cells) => cells.length === 2),
+		).toBeTruthy();
 
 		expect(descriptionRows[0][0]).toBe('Caractéristique :');
 		expect(descriptionRows[0][1]).toBe('caractéristique1');
@@ -218,9 +255,12 @@ describe('RoleDetails', () => {
 				name: 'role2',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-			})
+			}),
 		];
-		const { harness, compiled } = await compileComponents('/roles/role1', roles);
+		const { harness, compiled } = await compileComponents(
+			'/roles/role1',
+			roles,
+		);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('role1');
 		expect(compiled.textContent).not.toContain('role2');
@@ -238,7 +278,9 @@ describe('RoleDetails', () => {
 			aura: Aura.Neutre,
 			details: ['detail1', 'detail2'],
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+			role,
+		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('detail1');
 		expect(compiled.textContent).toContain('detail2');
@@ -249,14 +291,20 @@ describe('RoleDetails', () => {
 			name: 'test',
 			camp: Camp.Oni,
 			aura: Aura.Neutre,
-			exemples: ['exemple1', 'exemple2']
+			exemples: ['exemple1', 'exemple2'],
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [role]);
+		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+			role,
+		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		const exemplesElement = Array.from(compiled.querySelectorAll('em'));
 		expect(exemplesElement.length).toBeGreaterThan(1);
-		expect(exemplesElement.some(el => el.textContent?.includes('exemple1'))).toBeTruthy();
-		expect(exemplesElement.some(el => el.textContent?.includes('exemple2'))).toBeTruthy();
+		expect(
+			exemplesElement.some((el) => el.textContent?.includes('exemple1')),
+		).toBeTruthy();
+		expect(
+			exemplesElement.some((el) => el.textContent?.includes('exemple2')),
+		).toBeTruthy();
 	});
 
 	it('should redirect when clicking any see also role', async () => {
@@ -265,13 +313,13 @@ describe('RoleDetails', () => {
 				name: 'role1',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-				seeAlso: ['role2']
+				seeAlso: ['role2'],
 			}),
 			new Role({
 				name: 'role2',
 				camp: Camp.Oni,
 				aura: Aura.Neutre,
-			})
+			}),
 		];
 		const { compiled } = await compileComponents('/roles/role1', roles);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
