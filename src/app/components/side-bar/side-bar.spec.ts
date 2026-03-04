@@ -125,6 +125,27 @@ describe('SideBar', () => {
 		expect(link!.getAttribute('href')).toBe('/example');
 	});
 
+	it('should toggle group collapsed state when toggle is called', () => {
+		fixture.componentRef.setInput('structure', {
+			Section: {
+				Subsection: null,
+			},
+		});
+		fixture.componentRef.setInput('openDepth', 1);
+		fixture.detectChanges();
+
+		const entriesData = component.entriesData();
+		const section = entriesData[0];
+		const button = fixture.nativeElement.querySelector('button');
+		expect(button).toBeTruthy();
+		expect(section.group).toBeDefined();
+		expect(section.group!.collapsed).toBe(false);
+		button.click();
+		expect(section.group!.collapsed).toBe(true);
+		button.click();
+		expect(section.group!.collapsed).toBe(false);
+	});
+
 	describe('render all types of entries', () => {
 		it('should render null entry', () => {
 			fixture.componentRef.setInput('structure', {
