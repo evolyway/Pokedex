@@ -55,7 +55,7 @@ describe('RoleDetails', () => {
 			],
 		);
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
-		expect(activeComponent.role).not.toBeUndefined();
+		expect(activeComponent.role()).not.toBeUndefined();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 	});
 
