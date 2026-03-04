@@ -40,7 +40,7 @@ describe('RoleDetails', () => {
 			await compileComponents('/role/nonexistent');
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).toBeUndefined();
-		expect(compiled.textContent).toContain('Rôle non trouvé.');
+		expect(compiled.textContent).toContain('Rôle non trouvé');
 	});
 
 	it('should show role details if role exists', async () => {
@@ -56,7 +56,7 @@ describe('RoleDetails', () => {
 		);
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).not.toBeUndefined();
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 	});
 
 	describe('generated description sentences', () => {
@@ -65,7 +65,7 @@ describe('RoleDetails', () => {
 				`/role/${role.name}`,
 				[role],
 			);
-			expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+			expect(compiled.textContent).not.toContain('Rôle non trouvé');
 			const descriptionElement = compiled.querySelector('em');
 			expect(descriptionElement).not.toBeNull();
 			return descriptionElement!
@@ -81,7 +81,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle sans caractéristiques ni pouvoirs.',
+				'test est un rôle sans caractéristiques ni pouvoirs',
 			);
 		});
 
@@ -94,7 +94,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec une caractéristique .',
+				'test est un rôle avec une caractéristique',
 			);
 		});
 
@@ -107,7 +107,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec des caractéristiques .',
+				'test est un rôle avec des caractéristiques',
 			);
 		});
 
@@ -121,7 +121,7 @@ describe('RoleDetails', () => {
 				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec un pouvoir .');
+			expect(description).toBe('test est un rôle avec un pouvoir');
 		});
 
 		it('role with multiple powers', async () => {
@@ -134,7 +134,7 @@ describe('RoleDetails', () => {
 				},
 			});
 			const description = await getDescriptionSentences(role);
-			expect(description).toBe('test est un rôle avec des pouvoirs .');
+			expect(description).toBe('test est un rôle avec des pouvoirs');
 		});
 
 		it('role with 1 characteristic and 1 power', async () => {
@@ -149,7 +149,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec une caractéristique et un pouvoir .',
+				'test est un rôle avec une caractéristique et un pouvoir',
 			);
 		});
 
@@ -165,7 +165,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec des caractéristiques et des pouvoirs .',
+				'test est un rôle avec des caractéristiques et des pouvoirs',
 			);
 		});
 
@@ -181,7 +181,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec une caractéristique et des pouvoirs .',
+				'test est un rôle avec une caractéristique et des pouvoirs',
 			);
 		});
 
@@ -197,7 +197,7 @@ describe('RoleDetails', () => {
 			});
 			const description = await getDescriptionSentences(role);
 			expect(description).toBe(
-				'test est un rôle avec des caractéristiques et un pouvoir .',
+				'test est un rôle avec des caractéristiques et un pouvoir',
 			);
 		});
 	});
@@ -216,7 +216,7 @@ describe('RoleDetails', () => {
 		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 
 		const descriptionRows = Array.from(
 			compiled.querySelectorAll('table tr'),
@@ -261,12 +261,12 @@ describe('RoleDetails', () => {
 			'/role/role1',
 			roles,
 		);
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		expect(compiled.textContent).toContain('role1');
 		expect(compiled.textContent).not.toContain('role2');
 
 		await harness.navigateByUrl('/role/role2');
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		expect(compiled.textContent).toContain('role2');
 		expect(compiled.textContent).not.toContain('role1');
 	});
@@ -281,7 +281,7 @@ describe('RoleDetails', () => {
 		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		expect(compiled.textContent).toContain('detail1');
 		expect(compiled.textContent).toContain('detail2');
 	});
@@ -296,7 +296,7 @@ describe('RoleDetails', () => {
 		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		const exemplesElement = Array.from(compiled.querySelectorAll('em'));
 		expect(exemplesElement.length).toBeGreaterThan(1);
 		expect(
@@ -322,7 +322,7 @@ describe('RoleDetails', () => {
 			}),
 		];
 		const { fixture, compiled } = await compileComponents('/role/role1', roles);
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		const seeAlsoLink = compiled.querySelector('a');
 		expect(seeAlsoLink).not.toBeNull();
 		expect(seeAlsoLink?.textContent).toBe('role2');
@@ -330,7 +330,7 @@ describe('RoleDetails', () => {
 		seeAlsoLink?.dispatchEvent(new MouseEvent('click'));
 		await fixture.whenStable();
 		fixture.detectChanges();
-		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
+		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		expect(compiled.textContent).toContain('role2');
 		expect(compiled.textContent).not.toContain('role1');
 	});
