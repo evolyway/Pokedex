@@ -36,7 +36,8 @@ export default {
 			}
 
 			override async generateCoverage(_: { allTestsRun: boolean }) {
-				const allCoverageFiles = new Map(this.coverageFiles);
+				const originalCoverageFiles = this.coverageFiles;
+				const allCoverageFiles = new Map(originalCoverageFiles);
 				const finalMap = this.createCoverageMap();
 
 				try {
@@ -76,7 +77,7 @@ export default {
 					}
 				} finally {
 					// Always restore the original coverage files map, even if an error occurs
-					this.coverageFiles = allCoverageFiles;
+					this.coverageFiles = originalCoverageFiles;
 				}
 
 				return finalMap;
