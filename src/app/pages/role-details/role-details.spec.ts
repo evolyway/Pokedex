@@ -10,7 +10,7 @@ import Camp from '#types/camp';
 import Aura from '#types/aura';
 
 describe('RoleDetails', () => {
-	async function compileComponents(url = '/', roles: Role[] = []) {
+	async function compileComponents(url = '/role/', roles: Role[] = []) {
 		await TestBed.configureTestingModule({
 			imports: [RoleDetails],
 			providers: [
@@ -24,6 +24,7 @@ describe('RoleDetails', () => {
 		const activeComponent = (await harness.navigateByUrl(
 			url,
 		)) as RoleDetails;
+		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		const fixture = harness.fixture;
 		const compiled = fixture.nativeElement as HTMLElement;
 		return { harness, activeComponent, fixture, compiled };
