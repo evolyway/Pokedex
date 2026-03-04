@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, computed, input, Signal } from '@angular/core';
 import { SidebarNode, SidebarTree } from '#types/sidebarStructure';
 import { RouterModule } from '@angular/router';
 
@@ -8,17 +8,12 @@ import { RouterModule } from '@angular/router';
 	templateUrl: './side-bar.html',
 	styleUrl: './side-bar.css',
 })
-export class SideBar implements OnInit {
-	@Input() structure!: SidebarTree;
-	@Input() openDepth: number = 0;
-	entriesData: SidebarNodeData[] = [];
-
-	ngOnInit() {
-		this.entriesData = Object.entries(this.structure).map(
-			([name, entry]) =>
-				new SidebarNodeData(name, entry, this.openDepth <= 0),
-		);
-	}
+export class SideBar {
+	structure = input.required<SidebarTree>({});
+	openDepth = input<number>(0);
+	entriesData: Signal<SidebarNodeData[]> = computed(() => Object.entries(this.structure()).map(
+		([name, entry]) => new SidebarNodeData(name, entry, this.openDepth() <= 0))
+	);
 }
 
 class SidebarNodeData {
