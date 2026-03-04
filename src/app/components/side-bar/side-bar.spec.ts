@@ -97,7 +97,7 @@ describe('SideBar', () => {
 		]);
 	});
 
-	it('should creaate the nested structure correctly', async () => {
+	it('should create the nested structure correctly', async () => {
 		fixture.componentRef.setInput('structure', {
 			Section: {
 				Subsection: '/example',
