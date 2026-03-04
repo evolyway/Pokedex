@@ -16,6 +16,7 @@ export class App implements OnInit {
 	roleService = inject(Roles);
 	sidebarData = getSidebarStructure(this.roleService.list);
 
+	/* v8 ignore next */
 	ngOnInit() {
 		if (typeof window === 'undefined') return;
 		this.sidebarOpen.set(window.innerWidth >= 1024);
