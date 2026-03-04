@@ -10,8 +10,7 @@
 import { default as v8Module } from '@vitest/coverage-v8';
 
 function getAllowedSuffixes(specFile: string): string[] {
-	const normalized = specFile.replace(/\\/g, '/');
-	const match = normalized.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
+	const match = specFile.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
 	if (!match) return [];
 	const base = match[1];
 	return [`${base}.ts`, `${base}.html`];
@@ -68,8 +67,7 @@ export default {
 								// The `endsWith(`/${s}`)` check ensures whole path-segment matching:
 								// e.g. suffix `src/app/button.ts` won't match `src/app/icon-button.ts`.
 								for (const file of specMap.files()) {
-									const normalizedFile = file.replace(/\\/g, '/');
-									if (allowedSuffixes.some((s) => normalizedFile === s || normalizedFile.endsWith(`/${s}`))) {
+									if (allowedSuffixes.some((s) => file === s || file.endsWith(`/${s}`))) {
 										finalMap.addFileCoverage(specMap.fileCoverageFor(file));
 									}
 								}
