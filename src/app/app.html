@@ -11,7 +11,9 @@
 		</button>
 	</header>
 	<div class="flex flex-1 overflow-hidden">
-		<app-side-bar [class.hidden]="!sidebarOpen()" />
+		<aside [class.hidden]="!sidebarOpen()" class="flex flex-col w-screen sm:w-64 h-full overflow-y-auto bg-sidebar-bg/80 border-r border-sidebar-accent/30 p-3 shrink-0">
+			<app-side-bar [structure]="sidebarData" [openDepth]="1"></app-side-bar>
+		</aside>
 		<main class="flex-1 overflow-y-auto p-4">
 			<router-outlet />
 		</main>

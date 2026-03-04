@@ -1,8 +1,47 @@
-<aside
-	class="flex flex-col w-screen sm:w-64 h-full overflow-y-auto bg-sidebar-bg/80 border-r border-sidebar-accent/30 p-3 shrink-0"
->
-	<app-side-bar-entries
-		[entries]="structureEntries"
-		[openDepth]="1"
-	></app-side-bar-entries>
-</aside>
+@for (entry of entriesData(); track entry.name) {
+	<nav class="my-0.5">
+		@let group = entry.group;
+		@if (group) {
+			<button
+				(click)="group.toggle()"
+				class="flex items-center w-full gap-1 rounded px-2 py-1 text-left text-sm font-semibold text-sidebar-text hover:bg-sidebar-accent/20 transition-colors"
+				aria-label="Toggle {{ entry.name }} group"
+			>
+				<span
+					class="shrink-0 transition-transform duration-200"
+					[class.rotate-90]="!group.collapsed"
+					>&#9654;</span
+				>
+				@if (entry.link) {
+					<a [routerLink]="entry.link" class="flex-1 hover:underline" (click)="$event.stopPropagation(); group.collapsed = false">
+						{{ entry.name }}
+					</a>
+				} @else {
+					<span class="flex-1">{{ entry.name }}</span>
+				}
+			</button>
+			<nav
+				class="ml-3 border-l border-sidebar-accent/30 pl-2"
+				[class.hidden]="group.collapsed"
+			>
+				<app-side-bar
+					[structure]="group.children"
+					[openDepth]="openDepth() > 0 ? openDepth() - 1 : 0"
+				></app-side-bar>
+			</nav>
+		} @else if (entry.link) {
+			<a
+				[routerLink]="entry.link"
+				class="flex items-center w-full rounded px-2 py-1 text-sm text-sidebar-text-muted hover:bg-sidebar-accent/20 hover:text-sidebar-text transition-colors"
+			>
+				{{ entry.name }}
+			</a>
+		} @else {
+			<span
+				class="flex items-center w-full rounded px-2 py-1 mt-1 text-sm text-sidebar-text-muted bg-black/30"
+			>
+				{{ entry.name }}
+			</span>
+		}
+	</nav>
+}
