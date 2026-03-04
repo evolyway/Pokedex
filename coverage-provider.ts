@@ -9,6 +9,14 @@
 
 import { default as v8Module } from '@vitest/coverage-v8';
 
+function getAllowedSuffixes(specFile: string): string[] {
+	const normalized = specFile.replace(/\\/g, '/');
+	const match = normalized.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
+	if (!match) return [];
+	const base = match[1];
+	return [`${base}.ts`, `${base}.html`];
+}
+
 export default {
 	startCoverage: v8Module.startCoverage,
 	takeCoverage: v8Module.takeCoverage,
@@ -54,13 +62,7 @@ export default {
 								// All test files in this project follow the `src/**/*.spec.ts` convention.
 								// If a test file doesn't match that pattern the fallback strips `.spec.ts`
 								// from the full path, which is harmless but will produce no coverage match.
-								const allowedSuffixes = testFilenames.split(',').flatMap((specFile) => {
-									const normalized = specFile.replace(/\\/g, '/');
-									const match = normalized.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
-									if (!match) return [];
-									const base = match[1];
-									return [`${base}.ts`, `${base}.html`];
-								});
+								const allowedSuffixes = testFilenames.split(',').flatMap(getAllowedSuffixes);
 
 								// Keep only files directly tested by this spec.
 								// The `endsWith(`/${s}`)` check ensures whole path-segment matching:
