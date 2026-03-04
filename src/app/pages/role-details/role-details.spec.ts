@@ -30,7 +30,7 @@ describe('RoleDetails', () => {
 		return { harness, activeComponent, fixture, compiled };
 	}
 
-	it.concurrent('should create', async () => {
+	it('should create', async () => {
 		const { fixture } = await compileComponents();
 		const componentInstance = fixture.componentInstance;
 		expect(componentInstance).toBeTruthy();
