@@ -14,9 +14,7 @@ describe('RoleDetails', () => {
 		await TestBed.configureTestingModule({
 			imports: [RoleDetails],
 			providers: [
-				provideRouter([
-					{ path: 'role/:name', component: RoleDetails },
-				]),
+				provideRouter([{ path: 'role/:name', component: RoleDetails }]),
 				{ provide: Roles, useValue: { list: roles } },
 			],
 		}).compileComponents();
@@ -62,10 +60,9 @@ describe('RoleDetails', () => {
 
 	describe('generated description sentences', () => {
 		async function getDescriptionSentences(role: Role) {
-			const { compiled } = await compileComponents(
-				`/role/${role.name}`,
-				[role],
-			);
+			const { compiled } = await compileComponents(`/role/${role.name}`, [
+				role,
+			]);
 			expect(compiled.textContent).not.toContain('Rôle non trouvé');
 			const descriptionElement = compiled.querySelector('em');
 			expect(descriptionElement).not.toBeNull();
@@ -322,7 +319,10 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 			}),
 		];
-		const { fixture, compiled } = await compileComponents('/role/role1', roles);
+		const { fixture, compiled } = await compileComponents(
+			'/role/role1',
+			roles,
+		);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé');
 		const seeAlsoLink = compiled.querySelector('a');
 		expect(seeAlsoLink).not.toBeNull();
