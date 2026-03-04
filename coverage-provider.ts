@@ -15,89 +15,69 @@ export default {
 	stopCoverage: v8Module.stopCoverage,
 
 	async getProvider() {
-		const [{ existsSync }, { default: libCoverage }, { V8CoverageProvider }] =
-			await Promise.all([
-				import('node:fs'),
-				import('istanbul-lib-coverage'),
-				import('@vitest/coverage-v8/dist/provider.js'),
-			]);
-
-		type SuiteRunMeta = {
-			coverage?: unknown;
-			testFiles: string[];
-			environment: string;
-			projectName?: string;
-		};
+		const { V8CoverageProvider } = await import('@vitest/coverage-v8/dist/provider.js');
 
 		/**
 		 * Extends V8CoverageProvider to scope coverage per spec file.
 		 * Each spec file's coverage is only counted for the source file it directly
 		 * tests (matching `.ts` and `.html` files), not for transitive dependencies.
+		 *
+		 * Each spec's stored coverage is processed independently by temporarily scoping
+		 * `this.coverageFiles` to a single entry and delegating to `super.generateCoverage()`.
+		 * The resulting Istanbul map is then filtered by allowed file suffixes.
+		 * This avoids calling any private methods directly.
 		 */
 		class PerFileCoverageProvider extends V8CoverageProvider {
-			private storedEntries: SuiteRunMeta[] = [];
-
-			override onAfterSuiteRun(meta: SuiteRunMeta): void {
-				if (meta.coverage) {
-					this.storedEntries.push(meta);
-				}
-			}
-
 			override async generateCoverage({ allTestsRun }: { allTestsRun: boolean }) {
+				const allCoverageFiles = new Map(this.coverageFiles);
 				const finalMap = this.createCoverageMap();
 
-				for (const { coverage: rawCoverage, testFiles, environment, projectName } of this.storedEntries) {
-					const project = projectName
-						? (this.ctx.getProjectByName(projectName) ?? this.ctx.getRootProject())
-						: this.ctx.getRootProject();
+				try {
+					for (const [projectName, coveragePerProject] of allCoverageFiles.entries()) {
+						for (const [environment, coverageByTestfiles] of Object.entries(coveragePerProject)) {
+							for (const [testFilenames, filename] of Object.entries(coverageByTestfiles)) {
+								// Temporarily scope coverage to just this one spec file so that
+								// super.generateCoverage() converts only its V8 data via source maps.
+								const tempCoverageFiles: typeof allCoverageFiles = new Map();
+								tempCoverageFiles.set(projectName, { [environment]: { [testFilenames]: filename } });
+								this.coverageFiles = tempCoverageFiles;
 
-					// Convert raw V8 data → Istanbul coverage map (applies source-map remapping)
-					const convertedMap = await this.convertCoverage(rawCoverage, project, environment);
+								// Passing allTestsRun: false prevents the parent from calling
+								// getCoverageMapForUncoveredFiles on each per-spec run.
+								const specMap = await super.generateCoverage({ allTestsRun: false });
 
-					// Compute path suffixes that this spec is allowed to cover.
-					// e.g. spec `src/app/pages/role-details/role-details.spec.ts`
-					//   → suffixes `src/app/pages/role-details/role-details.ts`
-					//              `src/app/pages/role-details/role-details.html`
-					// All test files in this project follow the `src/**/*.spec.ts` convention.
-					// If a test file doesn't match that pattern the fallback strips `.spec.ts`
-					// from the full path, which is harmless but will produce no coverage match.
-					const allowedSuffixes = testFiles.flatMap((specFile) => {
-						const normalized = specFile.replace(/\\/g, '/');
-						const match = normalized.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
-						if (!match) return [];
-						const base = match[1];
-						return [`${base}.ts`, `${base}.html`];
-					});
+								// Compute file-path suffixes that this spec is allowed to cover.
+								// e.g. spec `src/app/pages/role-details/role-details.spec.ts`
+								//   → suffixes `src/app/pages/role-details/role-details.ts`
+								//              `src/app/pages/role-details/role-details.html`
+								// BaseCoverageProvider stores testFilenames as testFiles.join() (comma-separated).
+								// All test files in this project follow the `src/**/*.spec.ts` convention.
+								// If a test file doesn't match that pattern the fallback strips `.spec.ts`
+								// from the full path, which is harmless but will produce no coverage match.
+								const allowedSuffixes = testFilenames.split(',').flatMap((specFile) => {
+									const normalized = specFile.replace(/\\/g, '/');
+									const match = normalized.match(/(?:\/|^)(src\/.+?)\.spec\.ts$/);
+									if (!match) return [];
+									const base = match[1];
+									return [`${base}.ts`, `${base}.html`];
+								});
 
-					// Build a filtered map containing only the matching source files.
-					// The `endsWith(`/${s}`)` check ensures whole path-segment matching:
-					// e.g. suffix `src/app/button.ts` won't match `src/app/icon-button.ts`.
-					const filteredMap = libCoverage.createCoverageMap({});
-					for (const file of convertedMap.files()) {
-						const normalizedFile = file.replace(/\\/g, '/');
-						if (allowedSuffixes.some((s) => normalizedFile === s || normalizedFile.endsWith(`/${s}`))) {
-							filteredMap.addFileCoverage(convertedMap.fileCoverageFor(file));
+								// Keep only files directly tested by this spec.
+								// The `endsWith(`/${s}`)` check ensures whole path-segment matching:
+								// e.g. suffix `src/app/button.ts` won't match `src/app/icon-button.ts`.
+								for (const file of specMap.files()) {
+									const normalizedFile = file.replace(/\\/g, '/');
+									if (allowedSuffixes.some((s) => normalizedFile === s || normalizedFile.endsWith(`/${s}`))) {
+										finalMap.addFileCoverage(specMap.fileCoverageFor(file));
+									}
+								}
+							}
 						}
 					}
-
-					finalMap.merge(filteredMap);
+				} finally {
+					// Always restore the original coverage files map, even if an error occurs
+					this.coverageFiles = allCoverageFiles;
 				}
-
-				// Add coverage for untested files when coverage.include is configured.
-				// Uses loose `!= null` to match original v8 provider behaviour (treats
-				// both `null` and `undefined` as "not set").
-				if (this.options.include != null && (allTestsRun || !this.options.cleanOnRerun)) {
-					const untestedCoverage = await this.getCoverageMapForUncoveredFiles(finalMap.files());
-					finalMap.merge(untestedCoverage);
-				}
-
-				// Filter to only files that exist on disk
-				finalMap.filter((filename: string) => {
-					if (this.options.excludeAfterRemap) {
-						return existsSync(filename) && this.isIncluded(filename);
-					}
-					return existsSync(filename);
-				});
 
 				return finalMap;
 			}
