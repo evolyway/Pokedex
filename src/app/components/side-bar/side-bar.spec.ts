@@ -16,8 +16,8 @@ describe('SideBar', () => {
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(SideBar);
+		fixture.componentRef.setInput('structure', {});
 		component = fixture.componentInstance;
-		component.structure = {};
 		await fixture.whenStable();
 	});
 
@@ -70,25 +70,26 @@ describe('SideBar', () => {
 	});
 
 	it('should initialize entriesData with the correct structure', () => {
-		component.structure = {
+		fixture.componentRef.setInput('structure', {
 			Section1: null,
 			Section2: 'http://example.com',
 			Section3: { Subsection1: null },
 			Section4: ['http://example.com', { Subsection2: null }],
-		};
-		component.ngOnInit();
-		expect(component.entriesData.length).toBe(4);
+		});
+		const entriesData = component.entriesData();
 
-		expect(component.entriesData[0].name).toBe('Section1');
-		expect(component.entriesData[0].entries).toBeNull();
+		expect(entriesData.length).toBe(4);
 
-		expect(component.entriesData[1].name).toBe('Section2');
-		expect(component.entriesData[1].entries).toBe('http://example.com');
+		expect(entriesData[0].name).toBe('Section1');
+		expect(entriesData[0].entries).toBeNull();
 
-		expect(component.entriesData[2].name).toBe('Section3');
-		expect(component.entriesData[2].entries).toEqual({ Subsection1: null });
+		expect(entriesData[1].name).toBe('Section2');
+		expect(entriesData[1].entries).toBe('http://example.com');
 
-		expect(component.entriesData[3].name).toBe('Section4');
-		expect(component.entriesData[3].entries).toEqual(['http://example.com', { Subsection2: null }]);
+		expect(entriesData[2].name).toBe('Section3');
+		expect(entriesData[2].entries).toEqual({ Subsection1: null });
+
+		expect(entriesData[3].name).toBe('Section4');
+		expect(entriesData[3].entries).toEqual(['http://example.com', { Subsection2: null }]);
 	});
 });
