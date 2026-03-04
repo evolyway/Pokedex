@@ -15,7 +15,8 @@ export default {
 	stopCoverage: v8Module.stopCoverage,
 
 	async getProvider() {
-		const { V8CoverageProvider } = await import('@vitest/coverage-v8/dist/provider.js');
+		const { V8CoverageProvider } =
+			await import('@vitest/coverage-v8/dist/provider.js');
 
 		/**
 		 * Extends V8CoverageProvider to scope coverage per spec file.
@@ -41,18 +42,34 @@ export default {
 				const finalMap = this.createCoverageMap();
 
 				try {
-					for (const [projectName, coveragePerProject] of allCoverageFiles.entries()) {
-						for (const [environment, coverageByTestfiles] of Object.entries(coveragePerProject)) {
-							for (const [testFilenames, filename] of Object.entries(coverageByTestfiles)) {
+					for (const [
+						projectName,
+						coveragePerProject,
+					] of allCoverageFiles.entries()) {
+						for (const [
+							environment,
+							coverageByTestfiles,
+						] of Object.entries(coveragePerProject)) {
+							for (const [
+								testFilenames,
+								filename,
+							] of Object.entries(coverageByTestfiles)) {
 								// Temporarily scope coverage to just this one spec file so that
 								// super.generateCoverage() converts only its V8 data via source maps.
-								const tempCoverageFiles: typeof allCoverageFiles = new Map();
-								tempCoverageFiles.set(projectName, { [environment]: { [testFilenames]: filename } });
+								const tempCoverageFiles: typeof allCoverageFiles =
+									new Map();
+								tempCoverageFiles.set(projectName, {
+									[environment]: {
+										[testFilenames]: filename,
+									},
+								});
 								this.coverageFiles = tempCoverageFiles;
 
 								// Passing allTestsRun: false prevents the parent from calling
 								// getCoverageMapForUncoveredFiles on each per-spec run.
-								const specMap = await super.generateCoverage({ allTestsRun: false });
+								const specMap = await super.generateCoverage({
+									allTestsRun: false,
+								});
 
 								// Compute file-path suffixes that this spec is allowed to cover.
 								// e.g. spec `src/app/pages/role-details/role-details.spec.ts`
@@ -62,14 +79,24 @@ export default {
 								// All test files in this project follow the `src/**/*.spec.ts` convention.
 								// If a test file doesn't match that pattern the fallback strips `.spec.ts`
 								// from the full path, which is harmless but will produce no coverage match.
-								const allowedSuffixes = testFilenames.split(',').flatMap(this.getAllowedSuffixes);
+								const allowedSuffixes = testFilenames
+									.split(',')
+									.flatMap(this.getAllowedSuffixes);
 
 								// Keep only files directly tested by this spec.
 								// The `endsWith(`/${s}`)` check ensures whole path-segment matching:
 								// e.g. suffix `src/app/button.ts` won't match `src/app/icon-button.ts`.
 								for (const file of specMap.files()) {
-									if (allowedSuffixes.some((s) => file === s || file.endsWith(`/${s}`))) {
-										finalMap.addFileCoverage(specMap.fileCoverageFor(file));
+									if (
+										allowedSuffixes.some(
+											(s) =>
+												file === s ||
+												file.endsWith(`/${s}`),
+										)
+									) {
+										finalMap.addFileCoverage(
+											specMap.fileCoverageFor(file),
+										);
 									}
 								}
 							}
