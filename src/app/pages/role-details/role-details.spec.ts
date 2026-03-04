@@ -332,6 +332,6 @@ describe('RoleDetails', () => {
 		fixture.detectChanges();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('role2');
-		expect(compiled.textContent).not.toContain('Role 1');
+		expect(compiled.textContent).not.toContain('role1');
 	});
 });
