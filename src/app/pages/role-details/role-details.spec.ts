@@ -15,7 +15,7 @@ describe('RoleDetails', () => {
 			imports: [RoleDetails],
 			providers: [
 				provideRouter([
-					{ path: 'roles/:name', component: RoleDetails },
+					{ path: 'role/:name', component: RoleDetails },
 				]),
 				{ provide: Roles, useValue: { list: roles } },
 			],
@@ -37,7 +37,7 @@ describe('RoleDetails', () => {
 
 	it('should show "Role not found" if role does not exist', async () => {
 		const { activeComponent, compiled } =
-			await compileComponents('/roles/nonexistent');
+			await compileComponents('/role/nonexistent');
 		expect(activeComponent).toBeInstanceOf(RoleDetails);
 		expect(activeComponent.role()).toBeUndefined();
 		expect(compiled.textContent).toContain('Rôle non trouvé.');
@@ -45,7 +45,7 @@ describe('RoleDetails', () => {
 
 	it('should show role details if role exists', async () => {
 		const { activeComponent, compiled } = await compileComponents(
-			'/roles/example',
+			'/role/example',
 			[
 				new Role({
 					name: 'example',
@@ -62,7 +62,7 @@ describe('RoleDetails', () => {
 	describe('generated description sentences', () => {
 		async function getDescriptionSentences(role: Role) {
 			const { compiled } = await compileComponents(
-				`/roles/${role.name}`,
+				`/role/${role.name}`,
 				[role],
 			);
 			expect(compiled.textContent).not.toBe('Rôle non trouvé.');
@@ -213,7 +213,7 @@ describe('RoleDetails', () => {
 				nuit: ['pouvoir de nuit 1', 'pouvoir de nuit 2'],
 			},
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
@@ -258,14 +258,14 @@ describe('RoleDetails', () => {
 			}),
 		];
 		const { harness, compiled } = await compileComponents(
-			'/roles/role1',
+			'/role/role1',
 			roles,
 		);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('role1');
 		expect(compiled.textContent).not.toContain('role2');
 
-		await harness.navigateByUrl('/roles/role2');
+		await harness.navigateByUrl('/role/role2');
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('role2');
 		expect(compiled.textContent).not.toContain('role1');
@@ -278,7 +278,7 @@ describe('RoleDetails', () => {
 			aura: Aura.Neutre,
 			details: ['detail1', 'detail2'],
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
@@ -293,7 +293,7 @@ describe('RoleDetails', () => {
 			aura: Aura.Neutre,
 			exemples: ['exemple1', 'exemple2'],
 		});
-		const { compiled } = await compileComponents(`/roles/${role.name}`, [
+		const { compiled } = await compileComponents(`/role/${role.name}`, [
 			role,
 		]);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
@@ -321,13 +321,15 @@ describe('RoleDetails', () => {
 				aura: Aura.Neutre,
 			}),
 		];
-		const { compiled } = await compileComponents('/roles/role1', roles);
+		const { fixture, compiled } = await compileComponents('/role/role1', roles);
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		const seeAlsoLink = compiled.querySelector('a');
 		expect(seeAlsoLink).not.toBeNull();
 		expect(seeAlsoLink?.textContent).toBe('role2');
 
 		seeAlsoLink?.dispatchEvent(new MouseEvent('click'));
+		await fixture.whenStable();
+		fixture.detectChanges();
 		expect(compiled.textContent).not.toContain('Rôle non trouvé.');
 		expect(compiled.textContent).toContain('role2');
 		expect(compiled.textContent).not.toContain('Role 1');
