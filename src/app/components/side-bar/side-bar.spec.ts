@@ -92,4 +92,36 @@ describe('SideBar', () => {
 		expect(entriesData[3].name).toBe('Section4');
 		expect(entriesData[3].entries).toEqual(['http://example.com', { Subsection2: null }]);
 	});
+
+	it('should creaate the nested structure correctly', async () => {
+		fixture.componentRef.setInput('structure', {
+			Section: {
+				Subsection: '/example',
+			},
+		});
+		fixture.detectChanges();
+
+		const entriesData = component.entriesData();
+
+		// entriesData
+		expect(entriesData.length).toBe(1);
+		const section = entriesData[0];
+		expect(section.name).toBe('Section');
+		expect(section.entries).toEqual({ Subsection: '/example' });
+		expect(section.group).toBeDefined();
+		expect(section.group!.children).toEqual({ Subsection: '/example' });
+
+		// html
+		const compiled = fixture.nativeElement as HTMLElement;
+		const parent = compiled.querySelector('nav');
+		expect(parent).toBeTruthy();
+		expect(parent!.textContent).toContain('Section');
+		const child = parent!.querySelector('nav nav');
+		expect(child).toBeTruthy();
+		expect(child!.textContent).toContain('Subsection');
+		expect(child!.textContent).not.toContain('Section');
+		const link = child!.querySelector('a');
+		expect(link).toBeTruthy();
+		expect(link!.getAttribute('href')).toBe('/example');
+	});
 });
