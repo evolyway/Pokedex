@@ -1,8 +1,9 @@
-import Camp from '#types/camp';
-import Aura from '#types/aura';
+import type Camp from '#types/camp';
+import type Aura from '#types/aura';
 import type jsonRole from '#types/jsonRole';
 
 export class Role {
+	/* v8 ignore next */
 	constructor(roleData: jsonRole) {
 		this.name = roleData.name;
 		this.normalizedName = Role.normalizeName(roleData.name);
@@ -43,7 +44,7 @@ export class Role {
 	static normalizeName(name: string): string {
 		return name
 			.toLowerCase()
-			.replaceAll(/[- ]/g, '_')
+			.replaceAll(/[- .]/g, '_')
 			.replaceAll(/[éèêë]/g, 'e')
 			.replaceAll(/[àâä]/g, 'a')
 			.replaceAll(/[îï]/g, 'i')

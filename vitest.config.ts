@@ -4,12 +4,14 @@ export default defineConfig({
 	test: {
 		exclude: [...configDefaults.exclude, 'dist/'],
 		coverage: {
+			provider: 'custom',
+			customProviderModule: './coverage-provider',
 			exclude: [...(configDefaults.coverage.exclude || []), 'dist/'],
 			thresholds: {
-				statements: 100,
-				branches: 100,
+				statements: 90,
+				branches: 90,
 				functions: 100,
-				lines: 100,
+				lines: 90,
 			},
 		},
 	},

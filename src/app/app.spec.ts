@@ -13,4 +13,16 @@ describe('App', () => {
 		const app = fixture.componentInstance;
 		expect(app).toBeTruthy();
 	});
+
+	it('should toggle the sidebar on button click', () => {
+		const fixture = TestBed.createComponent(App);
+		const app = fixture.componentInstance;
+		expect(app.sidebarOpen()).toBe(false);
+		const button = fixture.nativeElement.querySelector('header button');
+		expect(button).toBeTruthy();
+		button.click();
+		expect(app.sidebarOpen()).toBe(true);
+		button.click();
+		expect(app.sidebarOpen()).toBe(false);
+	});
 });

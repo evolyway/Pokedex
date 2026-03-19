@@ -11,12 +11,15 @@ import { RouterModule } from '@angular/router';
 export class SideBar {
 	structure = input.required<SidebarTree>({});
 	openDepth = input<number>(0);
-	entriesData: Signal<SidebarNodeData[]> = computed(() => Object.entries(this.structure()).map(
-		([name, entry]) => new SidebarNodeData(name, entry, this.openDepth() <= 0))
+	entriesData: Signal<SidebarNodeData[]> = computed(() =>
+		Object.entries(this.structure()).map(
+			([name, entry]) =>
+				new SidebarNodeData(name, entry, this.openDepth() <= 0),
+		),
 	);
 }
 
-class SidebarNodeData {
+export class SidebarNodeData {
 	name!: string;
 	entries!: SidebarNode;
 	link?: string;
