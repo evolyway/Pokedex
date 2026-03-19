@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Input } from '@angular/core';
+import { input } from '@angular/core';
 import { normalize } from '#lib/text';
 import { Router } from '@angular/router';
 import Camp, { getColor as getCampColor } from '#types/camp';
@@ -14,13 +14,13 @@ import Aura, { getColor as getAuraColor } from '#types/aura';
 export class ColoredText<T extends string> {
 	route = inject(Router);
 
-	@Input() value!: T;
-	@Input() getColor!: (value: T) => string;
-	@Input() routerLink?: string[];
+	value = input.required<T>();
+	getColor = input.required<(value: T) => string>();
+	routerLink = input<string[]>([]);
 
 	redirect() {
 		if (!this.routerLink) return;
-		this.route.navigate([...this.routerLink, normalize(this.value)]);
+		this.route.navigate([...this.routerLink(), normalize(this.value())]);
 	}
 }
 
@@ -32,8 +32,8 @@ export class ColoredText<T extends string> {
 	styleUrl: './colored-text.css',
 })
 export class CampColoredText extends ColoredText<Camp> {
-	override getColor = getCampColor;
-	override routerLink = ['/camp'];
+	override getColor = input<( value: Camp ) => string>( getCampColor );
+	override routerLink = input<string[]>( ['/camp'] );
 }
 
 // aura color text = ColoredText<Aura> { getColor: getAuraColor, routerLink: ['/aura'] }
@@ -44,6 +44,6 @@ export class CampColoredText extends ColoredText<Camp> {
 	styleUrl: './colored-text.css',
 })
 export class AuraColoredText extends ColoredText<Aura> {
-	override getColor = getAuraColor;
-	override routerLink = ['/aura'];
+	override getColor = input<( value: Aura ) => string>( getAuraColor );
+	override routerLink = input<string[]>( ['/aura'] );
 }

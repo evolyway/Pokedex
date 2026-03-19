@@ -12,6 +12,8 @@ describe('ColoredText', () => {
 		}).compileComponents();
 
 		fixture = TestBed.createComponent(ColoredText);
+		fixture.componentRef.setInput('value', 'test');
+		fixture.componentRef.setInput('getColor', (value: string) => `color-${value}`);
 		component = fixture.componentInstance;
 		await fixture.whenStable();
 	});

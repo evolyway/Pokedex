@@ -1,9 +1,10 @@
-import Camp from '#types/camp';
-import Aura from '#types/aura';
+import type Camp from '#types/camp';
+import type Aura from '#types/aura';
 import type jsonRole from '#types/jsonRole';
 import { normalize } from '#lib/text';
 
 export class Role {
+	/* v8 ignore next */
 	constructor(roleData: jsonRole) {
 		this.name = roleData.name;
 		this.normalizedName = normalize(roleData.name);

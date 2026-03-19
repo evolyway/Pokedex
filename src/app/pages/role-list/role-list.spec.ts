@@ -1,22 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CampList } from './camp-list';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { RoleList } from './role-list';
+import { provideRouter } from '@angular/router';
+
+import Camps from '#types/camp';
+import Aura from '#types/aura';
+import { Role } from '#types/role';
 
 describe('CampList', () => {
-	let component: CampList;
-	let fixture: ComponentFixture<CampList>;
-
-	beforeEach(async () => {
+	async function compileComponents(url = 'camp/oni') {
 		await TestBed.configureTestingModule({
-			imports: [CampList],
+			imports: [RoleList],
+			providers: [
+				provideRouter([
+					{ path: 'camp/:name', component: RoleList, data: { options: Object.values(Camps), optionGetter: (role: Role) => role.camp } },
+					{ path: 'aura/:name', component: RoleList, data: { options: Object.values(Aura),  optionGetter: (role: Role) => role.aura } },
+				]),
+			],
 		}).compileComponents();
 
-		fixture = TestBed.createComponent(CampList);
-		component = fixture.componentInstance;
-		await fixture.whenStable();
-	});
+		const harness = await RouterTestingHarness.create();
+		const activatComponent = (await harness.navigateByUrl(url)) as RoleList;
+		expect(activatComponent).toBeInstanceOf(RoleList);
+		const fixture = harness.fixture;
+		const compiled = fixture.nativeElement as HTMLElement;
+		return { harness, activatComponent, fixture, compiled };
+	};
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
+	it('should create', async () => {
+		const { fixture } = await compileComponents();
+		const componentInstance = fixture.componentInstance;
+		expect(componentInstance).toBeTruthy();
 	});
 });

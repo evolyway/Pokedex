@@ -22,7 +22,7 @@ export class RoleDetails implements OnInit {
 	private readonly _role: WritableSignal<Role | undefined> =
 		signal(undefined);
 	public readonly role = this._role.asReadonly();
-	roleService = inject(Roles);
+	private readonly roleService = inject(Roles);
 	protected descriptions: { type: string; text: string }[] = [];
 
 	ngOnInit() {
