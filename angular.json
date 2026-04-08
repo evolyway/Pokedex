@@ -7,7 +7,7 @@
 	},
 	"newProjectRoot": "projects",
 	"projects": {
-		"yog-wiki": {
+		"Pokedex": {
 			"projectType": "application",
 			"schematics": {},
 			"root": "",
@@ -60,10 +60,10 @@
 					"builder": "@angular/build:dev-server",
 					"configurations": {
 						"production": {
-							"buildTarget": "yog-wiki:build:production"
+							"buildTarget": "Pokedex:build:production"
 						},
 						"development": {
-							"buildTarget": "yog-wiki:build:development"
+							"buildTarget": "Pokedex:build:development"
 						}
 					},
 					"defaultConfiguration": "development"

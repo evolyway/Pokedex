@@ -20,14 +20,14 @@ jobs:
 				  mv -f src/assets/roles-prod.ts src/assets/roles.ts
             - name: Build project
               run: |
-                  pnpm build --configuration=production --base-href=/yog-wiki/
-                  cp dist/yog-wiki/browser/index.html dist/yog-wiki/browser/404.html
+                  pnpm build --configuration=production --base-href=/Pokedex/
+                  cp dist/Pokedex/browser/index.html dist/Pokedex/browser/404.html
             # Deploy on gh-pages branch
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v4
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist/yog-wiki/browser
+                  publish_dir: ./dist/Pokedex/browser
                   publish_branch: gh-pages
                   user_name: github-actions[bot]
                   user_email: github-actions[bot]@users.noreply.github.com

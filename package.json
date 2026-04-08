@@ -1,5 +1,5 @@
 {
-	"name": "yog-wiki",
+	"name": "pokedex",
 	"version": "0.0.0",
 	"imports": {
 		"#types/*": "./src/types/*.js",
@@ -20,7 +20,7 @@
 		"lint": "ng lint",
 		"format": "prettier --write .",
 		"format:check": "prettier --check .",
-		"serve:ssr:yog-wiki": "node dist/yog-wiki/server/server.mjs"
+		"serve:ssr:Pokedex": "node dist/Pokedex/server/server.mjs"
 	},
 	"prettier": {
 		"overrides": [
