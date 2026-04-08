@@ -9,10 +9,11 @@ import {
 import { Roles } from '#services/roles';
 import type { Role } from '#types/role';
 import { RouterModule } from '@angular/router';
+import { CampColoredText, AuraColoredText } from '#components/colored-text';
 
 @Component({
 	selector: 'app-role-details',
-	imports: [RouterModule],
+	imports: [RouterModule, CampColoredText, AuraColoredText],
 	templateUrl: './role-details.html',
 	styleUrl: './role-details.css',
 })
@@ -21,7 +22,7 @@ export class RoleDetails implements OnInit {
 	private readonly _role: WritableSignal<Role | undefined> =
 		signal(undefined);
 	public readonly role = this._role.asReadonly();
-	roleService = inject(Roles);
+	private readonly roleService = inject(Roles);
 	protected descriptions: { type: string; text: string }[] = [];
 
 	ngOnInit() {

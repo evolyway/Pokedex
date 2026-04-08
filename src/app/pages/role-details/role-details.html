@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center m-3 md:m-6">
 	@let role = this.role();
 	@if (!role) {
-		<p class="text-bubble">Rôle non trouvé.</p>
+		<p class="text-bubble">Rôle non trouvé</p>
 	} @else {
 		<img
 			[src]="role.image"
@@ -15,7 +15,7 @@
 			<em class="italic mb-1 text-sm text-gray-700">
 				{{ role.name }} est un rôle
 				@if (descriptions.length === 0) {
-					sans caractéristiques ni pouvoirs.
+					sans caractéristiques ni pouvoirs
 				} @else {
 					avec
 					@if (role.caracteristiques.length > 0) {
@@ -45,14 +45,23 @@
 							des pouvoirs
 						}
 					}
-					.
 				}
 			</em>
 
 			<p class="mb-3 text-gray-900 flex flex-row gap-4">
-				<span>Camp: {{ role.camp }}</span>
+				<span>
+					Camp:
+					<app-camp-colored-text
+						[value]="role.camp"
+					></app-camp-colored-text>
+				</span>
 				|
-				<span>Aura: {{ role.aura }}</span>
+				<span
+					>Aura:
+					<app-aura-colored-text
+						[value]="role.aura"
+					></app-aura-colored-text>
+				</span>
 			</p>
 
 			@if (descriptions.length > 0) {

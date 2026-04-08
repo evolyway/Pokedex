@@ -1,0 +1,9 @@
+@let value = this.value();
+@let getColor = this.getColor();
+<span
+	(click)="redirect()"
+	[style.color]="getColor(value)"
+	class="cursor-pointer"
+>
+	{{ value }}
+</span>
